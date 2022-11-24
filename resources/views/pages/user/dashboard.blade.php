@@ -82,9 +82,9 @@
                                     <td>{{ $item->description }}</td>
                                     <td>
                                         <a 
-                                            href="{{ route('user.request.print', $item->id) }}" 
+                                            href="{{ route('user.request.show', $item->id) }}" 
                                             class="btn btn-primary btn-sm mb-2" id="">
-                                            <i class="fas fa-print"></i>&nbsp;&nbsp;Print
+                                            <i class="fas fa-print"></i>&nbsp;&nbsp;Detail
                                         </a>
                                     </td>
                                 </tr>

@@ -26,8 +26,11 @@ class UserDashboardController extends Controller
         $req_alltime_count  = UserRequest::where('client_id', Auth::user()->id)->count();
 
         $req_today_list     = $req_today
+        ->whereIn('status',  ['Ordering', 'In-Progress'])
         ->orderBy('created_at', 'desc')
         ->paginate(3);
+
+        
 
         // $req_today      = UserRequest::whereHas('user_request', function($query){
         //     $query->where('request_created_date', date('Y-m-d'));

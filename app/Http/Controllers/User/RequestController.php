@@ -141,4 +141,28 @@ class RequestController extends Controller
             'item'  => $item 
         ]);
     }
+
+    public function cancel($id) {
+        $item = UserRequest::findOrFail($id);
+
+        $item->status = 'Cancelled';
+
+        $item->update();
+
+        return redirect()->route('user.request', [
+            'item'  => $item 
+        ]);
+    }
+
+    public function finish($id) {
+        $item = UserRequest::findOrFail($id);
+
+        $item->status = 'Finished';
+
+        $item->update();
+
+        return redirect()->route('user.request', [
+            'item'  => $item 
+        ]);
+    }
 }

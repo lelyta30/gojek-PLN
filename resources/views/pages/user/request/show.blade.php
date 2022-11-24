@@ -68,10 +68,21 @@
                                     <tr>
                                         <th></th>
                                         <td>
-                                            <a href="{{ route('technician.f-up-request.edit', $item->id) }}"
-                                                class="btn btn-primary btn-sm mb-2" id="">
-                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Edit
+                                            @if ($item->status == 'Finished')
+                                            <span class="badge badge-success">SELESAI</span>
+                                            @elseif ($item->status == 'Cancelled')
+                                            <span class="badge badge-danger">BATAL</span>
+                                            @elseif ($item->status == 'Ordering')
+                                            <a href="{{ route('user.request.cancel', $item->id) }}"
+                                                class="btn btn-danger btn-sm mb-2" id="">
+                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Cancel
                                             </a>
+                                            @elseif ($item->status == 'In-Progress')
+                                            <a href="{{ route('user.request.cancel', $item->id) }}"
+                                                class="btn btn-danger btn-sm mb-2" id="">
+                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Cancel
+                                            </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 </thead>

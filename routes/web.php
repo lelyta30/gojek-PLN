@@ -51,6 +51,10 @@ Route::prefix('/')
         ->name('user.request.store');
         Route::get('/request/print/{id}', [RequestController::class, 'printPreview'])
         ->name('user.request.print');
+        Route::get('/request/cancel/{id}', [RequestController::class, 'cancel'])
+        ->name('user.request.cancel');
+        Route::get('/request/finish/{id}', [RequestController::class, 'finish'])
+        ->name('user.request.finish');
     });
 
 Route::prefix('t')
