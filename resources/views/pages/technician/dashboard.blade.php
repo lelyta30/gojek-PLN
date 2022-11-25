@@ -122,7 +122,22 @@
                                         <td>{{ $item->request_created_date }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->description }}</td>
-                                        <td>{{ $item->status }}</td>
+                                        <td>
+                                            @if ($item->status == 'Finished')
+                                            <span class="badge badge-success">SELESAI</span></td>
+                                            @elseif ($item->status == 'Cancelled')
+                                            <span class="badge badge-danger">DIBATALKAN</span>
+                                            @elseif ($item->status == 'Ordering')
+                                            <a href="{{ route('user.request.cancel', $item->id) }}"
+                                                class="btn btn-danger btn-sm mb-2" id="">
+                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Cancel
+                                            </a>
+                                            @elseif ($item->status == 'In-Progress')
+                                            <a href="{{ route('user.request.cancel', $item->id) }}"
+                                                class="btn btn-danger btn-sm mb-2" id="">
+                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Cancel
+                                            </a>
+                                            @endif
                                         <td>
                                             <a href="{{ route('technician.f-up-request.show', $item->id) }}"
                                                 class="btn btn-primary btn-sm mb-2" id="">

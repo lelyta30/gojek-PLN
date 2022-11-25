@@ -44,4 +44,8 @@ class UserDashboardController extends Controller
             'req_today_list'        => $req_today_list
         ]);
     }
+
+    public function profile(){
+        return view('user.profile');
+    }
 }

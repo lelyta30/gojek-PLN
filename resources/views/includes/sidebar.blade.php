@@ -36,8 +36,8 @@ Tip 2: you can also add an image using data-image tag
             </li>
             <hr>
 
-            <li class="nav-item {{ request()->is('t/break-type') ? 'active' : '' }}">
-              <a class="nav-link " href="{{ route('break-type.index') }}">
+            <li class="nav-item">
+              <a class="nav-link " href="{{ route('technician.profile') }}">
                   <i class="nc-icon nc-fav-remove"></i>
                   <p>Profil</p>
               </a>
@@ -76,14 +76,14 @@ Tip 2: you can also add an image using data-image tag
             <li class="nav-item {{ request()->is('m/verified-request') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('manager.verified-request') }}">
                   <i class="nc-icon nc-check-2"></i>
-                  <p>List Req. Diverifikasi</p>
+                  <p>Daftar Permintaan</p>
               </a>
             </li>
 
             <li class="nav-item {{ request()->is('m/technician') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('technician.index') }}">
                   <i class="nc-icon nc-circle-09"></i>
-                  <p>List Teknisi</p>
+                  <p>List User</p>
               </a>
             </li>
           @endif

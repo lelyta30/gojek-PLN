@@ -57,4 +57,6 @@ class ManagerDashboardController extends Controller
             'req_not_finished_yet'              => $req_not_finished_yet
         ]);
     }
+
+    
 }

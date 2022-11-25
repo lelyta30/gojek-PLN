@@ -23,13 +23,13 @@
             <div class="col-12">
                 <div class="card ">
                     <div class="card-header ">
-                        <h4 class="card-title">List Teknisi</h4>
-                        <p class="card-category">Semua teknisi</p>
+                        <h4 class="card-title">List User</h4>
+                        <p class="card-category">Semua User</p>
                     </div>
                     <div class="card-body ">
 
                         <a href="{{ route('technician.create') }}" class="btn btn-primary btn-sm mb-2">
-                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Buat Data Teknisi 
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah User
                         </a>
 
                         <div class="table-responsive overflow-auto">
@@ -37,8 +37,11 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Username</th>
+                                        <th>Id</th>
                                         <th>Nama</th>
+                                        <th>Role</th>
+                                        <th>Nomor HP</th>
+                                        <th>Rating</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -68,22 +71,14 @@
             processing: true,
             serverSide: true,
             ajax: '{{ route('technician.json') }}',
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex'
-                },
-                {
-                    data: 'username',
-                    name: 'username'
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'action',
-                    name: 'action'
-                }
+            columns: [
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
+                {data: 'id'},
+                {data: 'name'},
+                {data: 'role'},
+                {data: 'no_hp'},
+                {data: 'rating'},
+                {data: 'action', name: 'action'} 
             ],
             order: [1, 'asc'],
             stateSave: true

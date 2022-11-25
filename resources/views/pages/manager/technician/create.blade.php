@@ -28,7 +28,7 @@
                         <p class="card-category">Silakan isi form di bawah ini.</p>
                     </div>
                     <div class="card-body ">
-                        <form method="POST" action="{{ route('technician.store') }}">
+                        <form method="GET" action="{{ route('alluser.store') }}">
                             @csrf
 
                             <div class="form-group">
@@ -66,6 +66,26 @@
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
                                     id="name" placeholder="Nama Departemen" value="{{ old('name') }}">
                                 @error('name')
+                                @include('includes.error-field')
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role" class="form-control-label">Role</label>
+                                <input type="role" class="form-control @error('role') is-invalid @enderror" 
+                                    name="role" id="role" placeholder="Role" 
+                                    value="">
+                                @error('role')
+                                @include('includes.error-field')
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="no_hp" class="form-control-label">Phone Number</label>
+                                <input type="no_hp" class="form-control @error('no_hp') is-invalid @enderror" 
+                                    name="no_hp" id="no_hp" placeholder="Phone Number" 
+                                    value="">
+                                @error('no_hp')
                                 @include('includes.error-field')
                                 @enderror
                             </div>

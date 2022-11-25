@@ -61,7 +61,7 @@
              </div>
  
          </div>
- 
+         <br>
          <div class="row">
              <div class="col-12">
                  <div class="card ">
@@ -74,58 +74,33 @@
                              <table class="table table-bordered" width="100%" cellspacing="0">
                                  <thead>
                                      <tr>
-                                         <th>ID Req.</th>
-                                         <th>Tgl Req.</th>
-                                         <th>Pemohon</th>
-                                         <th>Jenis Kerusakan</th>
-                                         <th>Deskripsi</th>
-                                         <th>Tgl Target</th>
-                                         <th>Tgl Selesai</th>
-                                         <th>Teknisi</th>
-                                         <th>Status</th>
-                                         <th>Catatan Teknisi</th>
-                                         <th>Action</th>
+                                        <th>ID Req.</th>
+                                        <th>Tanggal Request</th>
+                                        <th>Pemohon</th>
+                                        <th>Deskripsi</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                      </tr>
                                  </thead>
                                  <tbody>
                                      @forelse ($req_today as $item)
                                      <tr>
-                                         <td>{{ $item->followed_up_request->request_id }}</td>
-                                         <td>{{ $item->followed_up_request->user_request->request_created_date }}</td>
-                                         <td>{{ $item->followed_up_request->user_request->user->name }}</td>
-                                         <td>{{ $item->followed_up_request->user_request->break_type->name }}</td>
-                                         <td>{{ $item->followed_up_request->user_request->description }}</td>
-                                         <td>{{ $item->followed_up_request->target_date }}</td>
-                                         <td>{{ $item->followed_up_request->target_completion_date }}</td>
-                                         <td>{{ $item->followed_up_request->technician }}</td>
-                                         <td>
-                                            @if ($item->followed_up_request->is_done == 'SELESAI')
-                                                <span class="badge badge-success">
-                                            @elseif ($item->followed_up_request->is_done == 'BELUM SELESAI')
-                                                <span class="badge badge-secondary">
-                                            @elseif ($item->followed_up_request->is_done == 'BELUM BATAL')
-                                                <span class="badge badge-danger">
+                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $item->request_created_date }}</td>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ $item->description }}</td>
+                                        <td>{{ $item->status }}</td>
+                                        <td>
+                                            @if ($item->status == 'Finished')
+                                            <span class="badge badge-success">SELESAI</span></td>
+                                            @elseif ($item->status == 'Cancelled')
+                                            <span class="badge badge-danger">DIBATALKAN</span>
+                                            @elseif ($item->status == 'Ordering')
+                                            <span class="badge badge-secondary">USER MEMESAN</span>
+                                            @elseif ($item->status == 'In-Progress')
+                                            <span class="badge badge-primary">TUKANG MENERIMA</span>
                                             @endif
-                                            {{ $item->followed_up_request->is_done }}</span>
                                         </td>
-                                        <td>{{ $item->followed_up_request->technician_note }}</td>
-                                         <td>
-                                            <form action="{{ route('manager.verified-request.verify', $item->id) }}" method="post" class="d-inline">
-                                                @csrf
-                                                @method('PUT')
-                                                @if ($item->is_verified == 'BELUM')
-                                                    <input type="hidden" name="is_verified" value="SUDAH"> 
-                                                    <button class="btn btn-primary btn-sm btn-checkbox">
-                                                        
-                                                    </button>
-                                                @elseif($item->is_verified == 'SUDAH')
-                                                    <input type="hidden" name="is_verified" value="SUDAH"> 
-                                                    <button class="btn btn-primary btn-sm btn-checkbox">
-                                                        <i class="fas fa-check"></i>  
-                                                    </button>
-                                                @endif
-                                            </form>
-                                         </td>
                                      </tr>
                                      @empty
                                      <tr>
@@ -150,61 +125,36 @@
                      <div class="card-body ">
                          <div class="table-responsive overflow-auto">
                              <table class="table table-bordered" width="100%" cellspacing="0">
-                                 <thead>
-                                     <tr>
-                                         <th>ID Req.</th>
-                                         <th>Tgl Req.</th>
-                                         <th>Pemohon</th>
-                                         <th>Jenis Kerusakan</th>
-                                         <th>Deskripsi</th>
-                                         <th>Tgl Target</th>
-                                         <th>Tgl Selesai</th>
-                                         <th>Teknisi</th>
-                                         <th>Status</th>
-                                         <th>Catatan Teknisi</th>
-                                         <th>Action</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody>
-                                     @forelse ($req_not_finished_yet as $item)
-                                     <tr>
-                                         <td>{{ $item->followed_up_request->request_id }}</td>
-                                         <td>{{ $item->followed_up_request->user_request->request_created_date }}</td>
-                                         <td>{{ $item->followed_up_request->user_request->client_name }}</td>
-                                         <td>{{ $item->followed_up_request->user_request->break_type->name }}</td>
-                                         <td>{{ $item->followed_up_request->user_request->description }}</td>
-                                         <td>{{ $item->followed_up_request->target_date }}</td>
-                                         <td>{{ $item->followed_up_request->target_completion_date }}</td>
-                                         <td>{{ $item->followed_up_request->technician }}</td>
-                                         <td>
-                                            @if ($item->followed_up_request->is_done == 'SELESAI')
-                                                <span class="badge badge-success">
-                                            @elseif ($item->followed_up_request->is_done == 'BELUM SELESAI')
-                                                <span class="badge badge-secondary">
-                                            @elseif ($item->followed_up_request->is_done == 'BELUM BATAL')
-                                                <span class="badge badge-danger">
-                                            @endif
-                                            {{ $item->followed_up_request->is_done }}</span>
-                                        </td>
-                                        <td>{{ $item->followed_up_request->technician_note }}</td>
-                                         <td>
-                                            <form action="{{ route('manager.verified-request.verify', $item->id) }}" method="post" class="d-inline">
-                                                @csrf
-                                                @method('PUT')
-                                                @if ($item->is_verified == 'BELUM')
-                                                    <input type="hidden" name="is_verified" value="SUDAH"> 
-                                                    <button class="btn btn-primary btn-sm btn-checkbox">
-                                                        
-                                                    </button>
-                                                @elseif($item->is_verified == 'SUDAH')
-                                                    <input type="hidden" name="is_verified" value="BELUM"> 
-                                                    <button class="btn btn-primary btn-sm btn-checkbox">
-                                                        <i class="fas fa-check"></i>  
-                                                    </button>
-                                                @endif
-                                            </form>
-                                         </td>
-                                     </tr>
+                                <thead>
+                                    <tr>
+                                       <th>ID Req.</th>
+                                       <th>Tanggal Request</th>
+                                       <th>Pemohon</th>
+                                       <th>Deskripsi</th>
+                                       <th>Status</th>
+                                       <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($req_today as $item)
+                                    <tr>
+                                       <td>{{ $item->id }}</td>
+                                       <td>{{ $item->request_created_date }}</td>
+                                       <td>{{ $item->user->name }}</td>
+                                       <td>{{ $item->description }}</td>
+                                       <td>{{ $item->status }}</td>
+                                       <td>
+                                           @if ($item->status == 'Finished')
+                                           <span class="badge badge-success">SELESAI</span></td>
+                                           @elseif ($item->status == 'Cancelled')
+                                           <span class="badge badge-danger">DIBATALKAN</span>
+                                           @elseif ($item->status == 'Ordering')
+                                           <span class="badge badge-secondary">USER MEMESAN</span>
+                                           @elseif ($item->status == 'In-Progress')
+                                           <span class="badge badge-primary">TUKANG MENERIMA</span>
+                                           @endif
+                                       </td>
+                                    </tr>
                                      @empty
                                      <tr>
                                          <td class="text-center" colspan="11">Tidak ada data yang dapat ditampilkan</td>

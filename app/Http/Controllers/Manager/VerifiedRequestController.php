@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\UserRequest;
 
 use App\Models\VerifiedRequest;
 
@@ -14,41 +15,59 @@ use DataTables;
 class VerifiedRequestController extends Controller
 {
     public function json(){
-        $data = VerifiedRequest::with([
-            'followed_up_request.user_request.break_type',
-            'followed_up_request.user_request.user'
-        ]);
+        $data = UserRequest::orderBy('request_created_date', 'asc')->get();
 
-        return DataTables::of($data)
-        ->addColumn('action', function($data){
-            if ($data->is_verified == 'SUDAH') {
-                $result = '<form action="verified-request/verify/'.$data->id.'" method="post" class="d-inline">'
-                .csrf_field().
-                '<input type="hidden" name="_method" value="put" />
-                <input type="hidden" name="is_verified" value="BELUM">
-                    <button class="btn btn-primary btn-sm btn-checkbox">
-                        <i class="fas fa-check"></i>
-                    </button>
-                </form>';
-            } elseif($data->is_verified == 'BELUM') {
-                $result = '<form action="verified-request/verify/'.$data->id.'" method="post" class="d-inline">'
-                    .csrf_field().
-                    '<input type="hidden" name="_method" value="put" />
-                    <input type="hidden" name="is_verified" value="SUDAH">
-                    <button class="btn btn-primary btn-sm btn-checkbox">
-
-                    </button>
-                </form>';
-            } else {
-                $result = '';
-            }
-            return $result;
+        return datatables()
+        ->of($data)
+        ->addIndexColumn()
+        ->addColumn('id', function ($data) {
+            return $data->id;
         })
+        ->addColumn('nama_penyervis', function ($data) {
+            return $data->id_requested;
+        })
+        ->addColumn('nama_client', function ($data) {
+            return $data->user->name;
+        })
+        ->addColumn('tanggal', function ($data) {
+            return $data->request_created_date;
+        })
+        ->addColumn('jenis_permintaan', function ($data) {
+            return $data->jenis_permintaan;
+        })
+        ->addColumn('deskripsi', function ($data) {
+            return $data->deskripsi;
+        })
+        ->addColumn('rating', function ($data) {
+            return $data->rating;
+        })
+        ->addColumn('status', function ($data) {
+            $status = $data->status;
+            if($status=='Finished'){
+                return '<span class="badge badge-success">'. $status .'</span>';
+            }else if($status=='Cancelled'){
+                return '<span class="badge badge-danger">'. $status .'</span>';
+            }else if($status=='Ordering'){
+                return '<span class="badge badge-secondary">'. $status .'</span>';
+            }else if($status=='In-Progress'){
+                return '<span class="badge badge-primary">'. $status .'</span>';
+            }
+        })
+        ->addColumn('action', function($data){
+            $btn = '<a 
+             href="request/show/'.$data->id.'" 
+             class="btn btn-primary btn-sm mb-2" id="">
+             <i class="fas fa-print"></i>&nbsp;&nbsp;Show
+             </a>';
+
+             return $btn;
+        })
+        ->rawColumns(['action','status'])
         ->make(true);
     }
     
     public function index() {
-        return view('pages.manager.verified_request.list');
+        return view('pages.manager.request.list');
     }
 
     public function verify(VerifiedRequestRequest $request, $id) {

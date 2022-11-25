@@ -39,6 +39,8 @@ Route::prefix('/')
 Route::prefix('/')
     ->middleware(['auth', 'is.user'])
     ->group(function(){
+        Route::get('/profile', [UserDashboardController::class, 'profile'])
+        ->name('user.profile');
         Route::get('/request', [RequestController::class, 'index'])
         ->name('user.request');
         Route::get('/request/json', [RequestController::class, 'json'])
@@ -62,8 +64,8 @@ Route::prefix('t')
     ->group(function(){
         Route::get('/', [TechnicianDashboardController::class, 'index'])
         ->name('technician.dashboard');
-        Route::get('/json', [TechnicianDashboardController::class, 'json'])
-        ->name('technician.dashboard.json');
+        Route::get('/profile', [TechnicianDashboardController::class, 'profile'])
+        ->name('technician.profile');
 
         Route::get('/f-up-request', [FollowedUpRequestController::class, 'index'])
         ->name('technician.f-up-request');
@@ -101,6 +103,10 @@ Route::prefix('m')
     ->group(function(){
         Route::get('/', [ManagerDashboardController::class, 'index'])
         ->name('manager.dashboard');
+        Route::get('/user/alluser_store', [TechnicianController::class, 'alluser_store'])
+        ->name('alluser.store');
+        Route::get('/user/destroy/{id}', [TechnicianController::class, 'destroy'])
+        ->name('manager.user.delete');
         Route::get('/verified-request', [VerifiedRequestController::class, 'index'])
         ->name('manager.verified-request');
         Route::get('/verified-request/json', [VerifiedRequestController::class, 'json'])

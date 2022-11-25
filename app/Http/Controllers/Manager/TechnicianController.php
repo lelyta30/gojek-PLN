@@ -17,22 +17,39 @@ use DataTables;
 class TechnicianController extends Controller
 {
     public function json(){
-        $data = User::where('role', 'TECHNICIAN');
-
-        return DataTables::of($data)
-        ->addIndexColumn()
-        ->addColumn('action', function($data){
-               $btn = '
-                <a 
-                href="technician/'.$data->id.'/edit" 
-                class="btn btn-primary btn-sm mb-2" id="">
-                <i class="fas fa-edit"></i>&nbsp;&nbsp;Edit
-                </a>';
-
-                return $btn;
-        })
-        ->make(true);
+            $data = User::orderBy('name', 'asc')->get();
+    
+            return datatables()
+            ->of($data)
+            ->addIndexColumn()
+            ->addColumn('id', function ($data) {
+                return $data->id;
+            })
+            ->addColumn('nama', function ($data) {
+                return $data->name;
+            })
+            ->addColumn('role', function ($data) {
+                return $data->role;
+            })
+            ->addColumn('no_hp', function ($data) {
+                return $data->no_hp;
+            })
+            ->addColumn('rating', function ($data) {
+                return $data->rating;
+            })
+            ->addColumn('action', function($data){
+                $btn = '<a 
+                 href="/user/destroy/'.$data->id.'" 
+                 class="btn btn-danger btn-sm mb-2" id="">
+                 <i class="fas fa-trash"></i>&nbsp;&nbsp;Delete
+                 </a>';
+    
+                 return $btn;
+            })
+            ->rawColumns(['action','status'])
+            ->make(true);
     }
+
 
     public function index() {
         return view('pages.manager.technician.list');
@@ -46,12 +63,27 @@ class TechnicianController extends Controller
         $data               = $request->except('confirm_password');
         $data['password']   = Hash::make($data['password']);
         $data['role']       = 'TECHNICIAN';
-        $data['dept_code']  = '3300';
+        $data['dept_code']  = 'null';
         
         if(User::create($data)) {
             $request->session()->flash('alert-success-add', 'Teknisi berhasil ditambahkan');
         }
         return redirect()->route('technician.index');
+    }
+
+    public function alluser_store(ManAddTechRequest $request) {
+        $data               = $request->except('confirm_password');
+        $data['password']   = Hash::make($data['password']);
+        $data['dept_code']  = '0';
+        $data['foto_profil'] = 'null';
+        $data['rating'] = 3;
+        // dd($data);
+        
+        if(User::create($data)) {
+            $request->session()->flash('alert-success-add', 'Teknisi berhasil ditambahkan');
+        }
+
+        return redirect()->route('manager.dashboard');
     }
 
     public function show($id) {
@@ -74,10 +106,16 @@ class TechnicianController extends Controller
             $request->session()->flash('alert-success-update', 'User berhasil diupdate');
         }
         
-        return redirect()->route('technician.index');
+        return redirect()->route('manager.verified-request');
     }
 
-    public function destroy($id) {
+    public function destroy(Request $request, $id) {
+        $item = User::findOrFail($id);
+
+        if($item->delete()) {
+            $request->session()->flash('alert-success-update', 'User berhasil dihapus');
+        }
         
+        return redirect()->route('manager.verified-request');
     }
 }

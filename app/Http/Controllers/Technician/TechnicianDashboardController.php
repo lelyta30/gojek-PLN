@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Technician;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\UserRequest;
-use App\Models\FollowedUpRequest;
 
 class TechnicianDashboardController extends Controller
 {
@@ -34,5 +32,9 @@ class TechnicianDashboardController extends Controller
             'req_not_finished_yet'              => $req_alltime_unfinished,
             'req_alltime_finished'              => $req_alltime_finished
         ]);
+    }
+
+    public function profile(){
+        return view('pages.technician.profile');
     }
 }
