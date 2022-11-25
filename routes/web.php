@@ -57,6 +57,8 @@ Route::prefix('/')
         ->name('user.request.cancel');
         Route::get('/request/finish/{id}', [RequestController::class, 'finish'])
         ->name('user.request.finish');
+        Route::get('/request/delete/{id}', [RequestController::class, 'destroy'])
+        ->name('user.request.delete');
     });
 
 Route::prefix('t')

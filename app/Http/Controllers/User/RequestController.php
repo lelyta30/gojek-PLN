@@ -154,6 +154,14 @@ class RequestController extends Controller
         ]);
     }
 
+    public function destroy($id) {
+        $item = UserRequest::findOrFail($id);
+
+        $item->delete();
+
+        return redirect()->route('user.request');
+    }
+
     public function finish($id) {
         $item = UserRequest::findOrFail($id);
 

@@ -44,7 +44,7 @@
                                         <td>{{ $item->user->name }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Jenis jenis_permintaan</th>
+                                        <th>Jenis Permintaan</th>
                                         <td>{{ $item->jenis_permintaan }}</td>
                                     </tr>
                                     <tr>
@@ -82,8 +82,12 @@
                                                 class="btn btn-primary btn-sm mb-2" id="">
                                                 <i class="fas fa-edit"></i>&nbsp;&nbsp;Accept
                                             </a>
+                                            <a href="{{ route('technician.f-up-request.accept', $item->id) }}"
+                                                class="btn btn-primary btn-sm mb-2" id="">
+                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Reject
+                                            </a>
                                             @elseif ($item->status == 'Cancelled')
-                                            <span class="badge badge-success">DITOLAK</span>
+                                            <span class="badge badge-success">DIBATALKAN</span>
                                             @elseif ($item->status == 'Finished')
                                             <span class="badge badge-success">SELESAI</span>
                                             @endif

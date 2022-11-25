@@ -24,7 +24,7 @@ class TechnicianDashboardController extends Controller
         ->orderBy('created_at', 'desc')
         ->paginate(5);
 
-        $req_alltime_finished                 = UserRequest::where('id_requested', Auth::user()->id)->get();
+        $req_alltime_finished                 = UserRequest::where('id_requested', Auth::user()->id)->whereIn('status',  ['Finished', 'Cancelled'])->get();
 
         return view('pages.technician.dashboard', [
             'req_today_count'                   => $req_today_count,

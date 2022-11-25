@@ -73,7 +73,7 @@
                                             @elseif ($item->status == 'Cancelled')
                                             <span class="badge badge-danger">BATAL</span>
                                             @elseif ($item->status == 'Ordering')
-                                            <a href="{{ route('user.request.cancel', $item->id) }}"
+                                            <a href="{{ route('user.request.delete', $item->id) }}"
                                                 class="btn btn-danger btn-sm mb-2" id="">
                                                 <i class="fas fa-edit"></i>&nbsp;&nbsp;Cancel
                                             </a>

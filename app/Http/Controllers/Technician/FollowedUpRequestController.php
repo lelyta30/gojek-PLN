@@ -87,6 +87,19 @@ class FollowedUpRequestController extends Controller
         ]);
     }
 
+    public function reject($id) {
+        $item = UserRequest::findOrFail($id);
+
+        $item->status = 'Rejected';
+
+        $item->update();
+
+        return redirect()->route('technician.dashboard', [
+            'item'  => $item 
+        ]);
+    }
+
+
 
     public function edit($id) {
         $item           = FollowedUpRequest::findOrFail($id);
