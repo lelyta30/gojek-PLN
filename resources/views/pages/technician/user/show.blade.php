@@ -57,11 +57,13 @@
                                             @if ($item->status == 'Finished')
                                             <span class="badge badge-success">SELESAI</span>
                                             @elseif ($item->status == 'Cancelled')
-                                            <span class="badge badge-danger">BATAL</span>
+                                            <span class="badge badge-danger">DIBATALKAN</span>
                                             @elseif ($item->status == 'Ordering')
                                             <span class="badge badge-danger">MEMESAN</span>
                                             @elseif ($item->status == 'In-Progress')
                                             <span class="badge badge-secondary">DITERIMA/SEDANG PROSES</span>
+                                            @elseif ($item->status == 'Rejected')
+                                            <span class="badge danger-secondary">DITOLAK</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -74,7 +76,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('technician.f-up-request.accept', $item->id) }}"
+                                            <a href="{{ route('technician.f-up-request.reject', $item->id) }}"
                                                 class="btn btn-primary btn-sm mb-2" id="">
                                                 <i class="fas fa-edit"></i>&nbsp;&nbsp;Tolak
                                             </a>

@@ -99,8 +99,6 @@ class FollowedUpRequestController extends Controller
         ]);
     }
 
-
-
     public function edit($id) {
         $item           = FollowedUpRequest::findOrFail($id);
         $technicians    = User::where('role', 'TECHNICIAN')->get();

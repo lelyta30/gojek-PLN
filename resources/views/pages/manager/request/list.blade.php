@@ -38,6 +38,7 @@
                                         <th>Nama Penyervis</th>
                                         <th>Deskripsi</th>
                                         <th>Status</th>
+                                        <th>Rating</th>
                                      </tr>
                                  </thead>
                              </table>
@@ -73,6 +74,7 @@
                 {data: 'nama_penyervis'},
                 {data: 'description', name: 'description'},
                 {data: 'status'},
+                {data: 'rating'},
              ],
              order: [0, 'desc'],
              stateSave: true

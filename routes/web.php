@@ -59,6 +59,11 @@ Route::prefix('/')
         ->name('user.request.finish');
         Route::get('/request/delete/{id}', [RequestController::class, 'destroy'])
         ->name('user.request.delete');
+        Route::get('/request/rating/{id}', [RequestController::class, 'rating'])
+        ->name('user.request.rating');
+
+        Route::get('/dropdown', [RequestController::class, 'DropdownRole'])->name('user.request.dropdown');
+        Route::post('/api/fetch-dropdown/{role}', [RequestController::class, 'getRole'])->name('user.request.dropdown.getRole');
     });
 
 Route::prefix('t')
@@ -85,6 +90,8 @@ Route::prefix('t')
         ->name('technician.f-up-request.edit');
         Route::put('/f-up-request/update/{id}', [FollowedUpRequestController::class, 'update'])
         ->name('technician.f-up-request.update');
+        Route::get('/f-up-request/reject/{id}', [FollowedUpRequestController::class, 'reject'])
+        ->name('technician.f-up-request.reject');
 
         Route::get('/computer/json', [ComputerController::class, 'json'])
         ->name('computer.json');

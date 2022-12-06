@@ -57,7 +57,7 @@
                     <div class="card-body ">
   
                       <a 
-                        href="{{ route('user.request.create') }}" 
+                        href="{{ route('user.request.dropdown') }}" 
                         class="btn btn-primary btn-sm mb-2">
                           <i class="fas fa-plus"></i>&nbsp;&nbsp;Buat Request
                       </a>

@@ -78,6 +78,10 @@
                                                 <i class="fas fa-edit"></i>&nbsp;&nbsp;Cancel
                                             </a>
                                             @elseif ($item->status == 'In-Progress')
+                                            <a href="{{ route('user.request.finish', $item->id) }}"
+                                                class="btn btn-primary btn-sm mb-2" id="">
+                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Finish
+                                            </a>
                                             <a href="{{ route('user.request.cancel', $item->id) }}"
                                                 class="btn btn-danger btn-sm mb-2" id="">
                                                 <i class="fas fa-edit"></i>&nbsp;&nbsp;Cancel
@@ -85,6 +89,12 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    @if($item->status=="Finished")
+                                    <tr>
+                                        <th>Rating</th>
+                                        <td>{{ $item->rating }}</td>
+                                    </tr>
+                                    @endif
                                 </thead>
                             </table>
                         </div>

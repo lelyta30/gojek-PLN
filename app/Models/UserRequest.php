@@ -16,9 +16,10 @@ class UserRequest extends Model
     protected $fillable = [
         'request_created_date', 
         'client_id', 
-        'computer_id', 
-        'break_id', 
-        'kind_of_repair',
+        'id_requested', 
+        'jenis_permintaan', 
+        'status',
+        'rating',
         'description'
     ];
 

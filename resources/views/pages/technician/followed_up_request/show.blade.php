@@ -69,10 +69,6 @@
                                         <th></th>
                                         <td>
                                             @if ($item->status == 'In-Progress')
-                                            <a href="{{ route('technician.f-up-request.finish', $item->id) }}"
-                                                class="btn btn-primary btn-sm mb-2" id="">
-                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Finish
-                                            </a>
                                             <a href="{{ route('technician.f-up-request.cancel', $item->id) }}"
                                                 class="btn btn-danger btn-sm mb-2" id="">
                                                 <i class="fas fa-edit"></i>&nbsp;&nbsp;Cancel
@@ -80,11 +76,11 @@
                                             @elseif ($item->status == 'Ordering')
                                             <a href="{{ route('technician.f-up-request.accept', $item->id) }}"
                                                 class="btn btn-primary btn-sm mb-2" id="">
-                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Accept
+                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Terima
                                             </a>
-                                            <a href="{{ route('technician.f-up-request.accept', $item->id) }}"
-                                                class="btn btn-primary btn-sm mb-2" id="">
-                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Reject
+                                            <a href="{{ route('technician.f-up-request.reject', $item->id) }}"
+                                                class="btn btn-danger btn-sm mb-2" id="">
+                                                <i class="fas fa-edit"></i>&nbsp;&nbsp;Tolak
                                             </a>
                                             @elseif ($item->status == 'Cancelled')
                                             <span class="badge badge-success">DIBATALKAN</span>

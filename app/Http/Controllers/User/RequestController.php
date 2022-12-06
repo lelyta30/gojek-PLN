@@ -14,7 +14,7 @@ use App\Models\FollowedUpRequest;
 use App\Models\VerifiedRequest;
 
 use App\Http\Requests\User\RequestRequest;
-
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 use PDF;
@@ -56,6 +56,8 @@ class RequestController extends Controller
                 return '<span class="badge badge-secondary">'. $status .'</span>';
             }else if($status=='In-Progress'){
                 return '<span class="badge badge-primary">'. $status .'</span>';
+            }else if($status=='Rejected'){
+                return '<span class="badge badge-warning">'. $status .'</span>';
             }
         })
         ->addColumn('action', function($data){
@@ -76,20 +78,34 @@ class RequestController extends Controller
     }
 
     public function create() {
-        $departments    = Department::all();
-        $computers      = Computer::all();
-        $break_types    = BreakType::all();
 
-        return view('pages.user.request.create', [
-            'departments'   => $departments,
-            'computers'     => $computers,
-            'break_types'   => $break_types
-        ]);
+        return view('pages.user.request.create');
     }
 
-    public function store(Request $request) {
+    public function DropdownRole()
+    {   
+        $role = array();
+        $role[0] = 'TECHNICIAN';
+        $role[1] = 'DRIVER';
+        $role[2] = 'CUSTOMER_SERVICE';
 
-        $order = new UserRequest();
+        return view('pages.user.request.create', compact('role'));
+    }
+
+    public function getRole(Request $request)
+    {   
+        $role = $request->role;
+
+        $data['user'] = User::where('role', $role)->get();
+
+        // dd($data);
+        
+        return response()->json(['data' => $data]);
+    }
+
+    public function store(Request $request, $id) {
+
+        $order   = UserRequest::findOrFail($id);
         $order->client_id = $request->client_id;
         $order->request_created_date = $request->request_created_date;
         $order->id_requested = $request->requested_id;
@@ -154,6 +170,20 @@ class RequestController extends Controller
         ]);
     }
 
+    public function rating($id, Request $request) {
+        $item = UserRequest::findOrFail($id);
+
+        $item->rating = $request->rating;
+
+        // dd($item);
+
+        $item->update();
+
+        return redirect()->route('user.request', [
+            'item'  => $item 
+        ]);
+    }
+
     public function destroy($id) {
         $item = UserRequest::findOrFail($id);
 
@@ -169,8 +199,18 @@ class RequestController extends Controller
 
         $item->update();
 
-        return redirect()->route('user.request', [
-            'item'  => $item 
-        ]);
+        return view('pages.user.request.rating', compact('item'));
+    }
+
+    public function loadForm($diskon = 0, $total = 0, $diterima = 0, $ppn = 0)
+    {
+        $didiskon = $total - ($diskon / 100 * $total);
+        $bayar   = $didiskon + ($ppn / 100 * $didiskon);
+        $kembali = ($diterima != 0) ? $diterima - $bayar : 0;
+        $data    = [
+            'bayar' => $bayar,
+        ];
+
+        return response()->json($data);
     }
 }
