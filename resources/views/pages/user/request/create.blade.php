@@ -55,9 +55,9 @@
                                 <select class="custom-select" class="form-control @error('jenis_permohonan') is-invalid @enderror"
                                 name="jenis_permohonan" id="jenis_permohonan" placeholder="Jenis Permohonan"
                                 value="">
-                                    <option value="0">-- Select Request --</option>
-                                    @foreach($role as $roles)
-                                        <option value="{{ $roles }}">{{ $roles}}</option>
+                                    <option selected disabled>-- Select Request --</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role }}">{{ $role }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -80,7 +80,7 @@
                             <div class="form-group">
                                 <label for="requested_id" class="form-control-label">Nama Penyervis</label>
                                 <select class="form-control @error('requested_id') is-invalid @enderror"
-                                name="requested_id" id="requested_id">
+                                name="requested_id" id="requested_id">                            
                                 </select>
                                     {{-- <span class="input-group-btn">
                                         <button onclick="tampilTeknisi()" class="btn btn-info btn-flat" type="button"><i class="fa fa-arrow-right"></i></button>
@@ -115,12 +115,13 @@
 @push('scripts')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('#jenis_permintaan').on('change', function () {
-            var name = this.value;
-            $("#requested_id").html('');
+   $(document).ready(function() {        
+        $('#jenis_permohonan').on('change', function() {        
+            var name = this.value;            
+            // $("#requested_id").html('');
+            
             $.ajax({
-                url: '{{ route('user.request.dropdown.getRole', 'name') }}',
+                url: `api/fetch-dropdown/${name}`,
                 type: "POST",
                 data: {
                     role: name,
@@ -128,12 +129,10 @@
                 },
                 dataType: 'json',
                 success: function (result) {
-                    $('#requested_id').html('<option value="">-- Select State --</option>');
-                    $.each(result.user, function (key, value) {
-                        $("#requested_id").append('<option value="' + value
-                            .id + '">' + value.name + '</option>');
-                    });
-                    $('#jenis_permintaan').html('<option value="">-- Select City --</option>');
+                    $('#requested_id').html('<option selected disabled>-- Select State --</option>');                    
+                    $.each(result.data.user, function (key, value) {
+                        $("#requested_id").append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });                    
                 }
             });
         });

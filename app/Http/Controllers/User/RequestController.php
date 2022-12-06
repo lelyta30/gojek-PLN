@@ -84,22 +84,18 @@ class RequestController extends Controller
 
     public function DropdownRole()
     {   
-        $role = array();
-        $role[0] = 'TECHNICIAN';
-        $role[1] = 'DRIVER';
-        $role[2] = 'CUSTOMER_SERVICE';
+        $roles = array();
+        $roles[0] = 'TECHNICIAN';
+        $roles[1] = 'DRIVER';
+        $roles[2] = 'CUSTOMER_SERVICE';
 
-        return view('pages.user.request.create', compact('role'));
+        return view('pages.user.request.create', compact('roles'));
     }
 
-    public function getRole(Request $request)
-    {   
-        $role = $request->role;
-
-        $data['user'] = User::where('role', $role)->get();
-
-        // dd($data);
-        
+    public function getRole(Request $request, $role)
+    {           
+        $data['user'] = User::where('role', $role)->get();        
+    
         return response()->json(['data' => $data]);
     }
 
