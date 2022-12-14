@@ -19,6 +19,7 @@ use App\Http\Controllers\Technician\UserController;
 use App\Http\Controllers\Manager\ManagerDashboardController;
 use App\Http\Controllers\Manager\VerifiedRequestController;
 use App\Http\Controllers\Manager\TechnicianController;
+use App\Http\Controllers\SecurityController;
 use SebastianBergmann\CodeCoverage\Driver\Driver;
 
 /*
@@ -184,23 +185,23 @@ Route::prefix('cl')
 Route::prefix('sc')
     ->middleware(['auth', 'is.security'])
     ->group(function(){
-        Route::get('/', [CleaningController::class, 'index'])
-        ->name('cleaning.dashboard');
-        Route::get('/profile', [CleaningController::class, 'profile'])
-        ->name('cleaning.profile');
-        Route::post('/store-profile', [CleaningController::class, 'profilestore'])
-        ->name('cleaning.storeprofile');
+        Route::get('/', [SecurityController::class, 'index'])
+        ->name('security.dashboard');
+        Route::get('/profile', [SecurityController::class, 'profile'])
+        ->name('security.profile');
+        Route::post('/store-profile', [SecurityController::class, 'profilestore'])
+        ->name('security.storeprofile');
 
-        Route::get('/request/show/{id}', [CleaningController::class, 'show'])
-        ->name('cleaning.request.show');
-        Route::get('/request/accept/{id}', [CleaningController::class, 'accept'])
-        ->name('cleaning.request.accept');
-        Route::get('/request/cancel/{id}', [CleaningController::class, 'cancel'])
-        ->name('cleaning.request.cancel');
-        Route::get('/request/finish/{id}', [CleaningController::class, 'finish'])
-        ->name('cleaning.request.finish');
-        Route::get('/request/reject/{id}', [CleaningController::class, 'reject'])
-        ->name('cleaning.request.reject');
+        Route::get('/request/show/{id}', [SecurityController::class, 'show'])
+        ->name('security.request.show');
+        Route::get('/request/accept/{id}', [SecurityController::class, 'accept'])
+        ->name('security.request.accept');
+        Route::get('/request/cancel/{id}', [SecurityController::class, 'cancel'])
+        ->name('security.request.cancel');
+        Route::get('/request/finish/{id}', [SecurityController::class, 'finish'])
+        ->name('security.request.finish');
+        Route::get('/request/reject/{id}', [SecurityController::class, 'reject'])
+        ->name('security.request.reject');
     });
 
 Route::prefix('m')
