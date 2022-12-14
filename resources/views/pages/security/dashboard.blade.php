@@ -76,7 +76,7 @@
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>
-                                            <a href="{{ route('security.f-up-request.show', $item->id) }}"
+                                            <a href="{{ route('security.request.show', $item->id) }}"
                                                 class="btn btn-primary btn-sm mb-2" id="">
                                                 <i class="fas fa-eye"></i>&nbsp;&nbsp;Detail
                                             </a>
@@ -124,7 +124,7 @@
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>
-                                            <a href="{{ route('security.f-up-request.show', $item->id) }}"
+                                            <a href="{{ route('security.request.show', $item->id) }}"
                                                 class="btn btn-primary btn-sm mb-2" id="">
                                                 <i class="fas fa-eye"></i>&nbsp;&nbsp;Detail
                                             </a>

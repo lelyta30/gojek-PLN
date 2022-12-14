@@ -69,6 +69,9 @@ class LoginController extends Controller
             case 'CLEANING':
                 return '/cl';
                 break;
+            case 'SECURITY':
+                return '/sc';
+                break;
             default:
                 return response('Unauthorized.', 401);
             break;

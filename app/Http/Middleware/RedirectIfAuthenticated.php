@@ -37,6 +37,12 @@ class RedirectIfAuthenticated
                     case 'DRIVER':
                         return redirect('/d');
                         break;
+                    case 'SECURITY':
+                        return redirect('/sc');
+                        break;
+                    case 'CLEANING':
+                        return redirect('/cl');
+                        break;
                     default:
                         return response('Unauthorized.', 401);
                     break;
