@@ -1,24 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Technician;
-
-use App\Http\Controllers\Controller;
-use App\Models\User;
+namespace App\Http\Controllers;
+use App\Models\UserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\User;
 
-use App\Models\UserRequest;
-use Illuminate\Support\Facades\Hash;
-
-class TechnicianDashboardController extends Controller
+class CleaningController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
-    {
+    {   
         $req_today_count                    = UserRequest::where([['id_requested', Auth::user()->id],['request_created_date', date('Y-m-d')]])
         ->count();
         $req_alltime_count                  = UserRequest::where('id_requested', Auth::user()->id)->count();
@@ -29,7 +20,7 @@ class TechnicianDashboardController extends Controller
 
         $req_alltime_finished                 = UserRequest::where('id_requested', Auth::user()->id)->whereIn('status',  ['Finished', 'Cancelled'])->get();
 
-        return view('pages.technician.dashboard', [
+        return view('pages.cleaningservice.dashboard', [
             'req_today_count'                   => $req_today_count,
             'req_alltime_count'                 => $req_alltime_count,
             'req_not_finished_yet'              => $req_alltime_unfinished,
@@ -38,7 +29,7 @@ class TechnicianDashboardController extends Controller
     }
 
     public function profile(){
-        return view('pages.technician.profile');
+        return view('pages.cleaningservice.profile');
     }
 
     public function profilestore(Request $request){
@@ -71,6 +62,68 @@ class TechnicianDashboardController extends Controller
             $user->foto = "/img/$nama";
         }
 
-        return redirect()->route('technician.dashboard');
+        return redirect()->route('cleaning.dashboard');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+     public function show($id) {
+        $item = UserRequest::findOrFail($id);
+
+        return view('pages.cleaningservice.show', [
+            'item'  => $item 
+        ]);
+    }
+
+    public function accept($id) {
+        $item = UserRequest::findOrFail($id);
+
+        $item->status = 'In-Progress';
+
+        $item->update();
+
+        return redirect()->route('cleaning.dashboard', [
+            'item'  => $item 
+        ]);
+    }
+
+    public function cancel($id) {
+        $item = UserRequest::findOrFail($id);
+
+        $item->status = 'Cancelled';
+
+        $item->update();
+
+        return redirect()->route('cleaning.dashboard', [
+            'item'  => $item 
+        ]);
+    }
+
+    public function finish($id) {
+        $item = UserRequest::findOrFail($id);
+
+        $item->status = 'Finished';
+
+        $item->update();
+
+        return redirect()->route('cleaning.dashboard', [
+            'item'  => $item 
+        ]);
+    }
+
+    public function reject($id) {
+        $item = UserRequest::findOrFail($id);
+
+        $item->status = 'Rejected';
+
+        $item->update();
+
+        return redirect()->route('cleaning.dashboard', [
+            'item'  => $item 
+        ]);
     }
 }

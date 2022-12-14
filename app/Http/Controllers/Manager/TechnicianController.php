@@ -72,7 +72,8 @@ class TechnicianController extends Controller
     }
 
     public function alluser_store(ManAddTechRequest $request) {
-        $data               = $request->except('confirm_password');
+        $data               = $request->except('confirm_password', 'no_hp');
+        $data['no_hp']      = '62'.$request->no_hp;
         $data['password']   = Hash::make($data['password']);
         $data['dept_code']  = '0';
         $data['foto_profil'] = 'null';
@@ -80,7 +81,7 @@ class TechnicianController extends Controller
         // dd($data);
         
         if(User::create($data)) {
-            $request->session()->flash('alert-success-add', 'Teknisi berhasil ditambahkan');
+            $request->session()->flash('alert-success-add', 'User berhasil ditambahkan');
         }
 
         return redirect()->route('manager.dashboard');

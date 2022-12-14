@@ -42,28 +42,42 @@ Tip 2: you can also add an image using data-image tag
                   <p>Profil</p>
               </a>
             </li>
-
-            {{-- <li class="nav-item {{ request()->is('t/computer') ? 'active' : '' }}">
-              <a class="nav-link " href="{{ route('computer.index') }}">
-                  <i class="nc-icon nc-tv-2"></i>
-                  <p>List Komputer</p>
-              </a>
-            </li>
-
-            <li class="nav-item {{ request()->is('t/department') ? 'active' : '' }}">
-              <a class="nav-link " href="{{ route('department.index') }}">
-                  <i class="nc-icon nc-vector"></i>
-                  <p>List Departemen</p>
-              </a>
-            </li>
-
-            <li class="nav-item {{ request()->is('t/user') ? 'active' : '' }}">
-              <a class="nav-link " href="{{ route('user.index') }}">
-                  <i class="nc-icon nc-circle-09"></i>
-                  <p>List User</p>
-              </a>
-            </li> --}}
           @endif
+
+          @if (Auth::user()->role == 'DRIVER')
+            <li class="nav-item {{ request()->is('d') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('driver.dashboard') }}">
+                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <hr>
+
+            <li class="nav-item">
+              <a class="nav-link " href="{{ route('driver.profile') }}">
+                  <i class="nc-icon nc-fav-remove"></i>
+                  <p>Profil</p>
+              </a>
+            </li>
+          @endif
+
+          @if (Auth::user()->role == 'CLEANING')
+            <li class="nav-item {{ request()->is('d') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('cleaning.dashboard') }}">
+                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <hr>
+
+            <li class="nav-item">
+              <a class="nav-link " href="{{ route('cleaning.profile') }}">
+                  <i class="nc-icon nc-fav-remove"></i>
+                  <p>Profil</p>
+              </a>
+            </li>
+          @endif
+          
 
           @if (Auth::user()->role == 'MANAGER')
             <li class="nav-item {{ request()->is('m') ? 'active' : '' }}">

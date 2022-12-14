@@ -55,7 +55,7 @@
                                 <select class="custom-select" class="form-control @error('jenis_permohonan') is-invalid @enderror"
                                 name="jenis_permohonan" id="jenis_permohonan" placeholder="Jenis Permohonan"
                                 value="">
-                                    <option selected disabled>-- Select Request --</option>
+                                    <option selected disabled>-- Select Role --</option>
                                     @foreach($roles as $role)
                                         <option value="{{ $role }}">{{ $role }}</option>
                                     @endforeach
@@ -129,7 +129,7 @@
                 },
                 dataType: 'json',
                 success: function (result) {
-                    $('#requested_id').html('<option selected disabled>-- Select State --</option>');                    
+                    $('#requested_id').html('<option selected disabled>-- Select People --</option>');                    
                     $.each(result.data.user, function (key, value) {
                         $("#requested_id").append('<option value="' + value.id + '">' + value.name + '</option>');
                     });                    

@@ -63,7 +63,12 @@ class LoginController extends Controller
             case 'MANAGER':
                 return '/m';
                 break; 
-      
+            case 'DRIVER':
+                return '/d';
+                break;
+            case 'CLEANING':
+                return '/cl';
+                break;
             default:
                 return response('Unauthorized.', 401);
             break;

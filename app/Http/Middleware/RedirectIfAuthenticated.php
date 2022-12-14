@@ -34,14 +34,15 @@ class RedirectIfAuthenticated
                     case 'MANAGER':
                         return redirect('/m');
                         break; 
-            
+                    case 'DRIVER':
+                        return redirect('/d');
+                        break;
                     default:
                         return response('Unauthorized.', 401);
                     break;
                 }
             }
         }
-
         return $next($request);
     }
 }

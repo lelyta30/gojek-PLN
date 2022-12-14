@@ -20,10 +20,17 @@
                 Silahkan beri rating
                 </div>
         <div class="box-footer">
-            <form action="{{ route('user.request.rating', $item->id) }}" method="GET">
+            <form action="{{ route('user.request.rating', $item->id) }}" method="post">
+                @csrf <!-- {{ csrf_field() }} -->
                 <div class="form-row">
                     <label for="rating">Rating</label>
-                    <input type="number" class="form-control" id="rating" placeholder="Masukkan angka 1(buruk) hingga 5(baik)">
+                    <select class="form-control" id="rating" name="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
                 </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

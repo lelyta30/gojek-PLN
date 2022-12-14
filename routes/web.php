@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CleaningController;
+use App\Http\Controllers\DriverController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
@@ -17,6 +19,7 @@ use App\Http\Controllers\Technician\UserController;
 use App\Http\Controllers\Manager\ManagerDashboardController;
 use App\Http\Controllers\Manager\VerifiedRequestController;
 use App\Http\Controllers\Manager\TechnicianController;
+use SebastianBergmann\CodeCoverage\Driver\Driver;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +62,7 @@ Route::prefix('/')
         ->name('user.request.finish');
         Route::get('/request/delete/{id}', [RequestController::class, 'destroy'])
         ->name('user.request.delete');
-        Route::get('/request/rating/{id}', [RequestController::class, 'rating'])
+        Route::post('/request/rating/{id}', [RequestController::class, 'rating'])
         ->name('user.request.rating');
 
         Route::get('/dropdown', [RequestController::class, 'DropdownRole'])->name('user.request.dropdown');
@@ -73,6 +76,8 @@ Route::prefix('t')
         ->name('technician.dashboard');
         Route::get('/profile', [TechnicianDashboardController::class, 'profile'])
         ->name('technician.profile');
+        Route::post('/store-profile', [TechnicianDashboardController::class, 'profilestore'])
+        ->name('technician.storeprofile');
 
         Route::get('/f-up-request', [FollowedUpRequestController::class, 'index'])
         ->name('technician.f-up-request');
@@ -107,6 +112,97 @@ Route::prefix('t')
         ]);
     });
 
+Route::prefix('d')
+    ->middleware(['auth', 'is.driver'])
+    ->group(function(){
+        Route::get('/', [DriverController::class, 'index'])
+        ->name('driver.dashboard');
+        Route::get('/profile', [DriverController::class, 'profile'])
+        ->name('driver.profile');
+        Route::post('/store-profile', [DriverController::class, 'profilestore'])
+        ->name('driver.storeprofile');
+
+        Route::get('/request/show/{id}', [DriverController::class, 'show'])
+        ->name('driver.request.show');
+        Route::get('/request/accept/{id}', [DriverController::class, 'accept'])
+        ->name('driver.request.accept');
+        Route::get('/request/cancel/{id}', [DriverController::class, 'cancel'])
+        ->name('driver.request.cancel');
+        Route::get('/request/finish/{id}', [DriverController::class, 'finish'])
+        ->name('driver.request.finish');
+        Route::get('/request/reject/{id}', [DriverController::class, 'reject'])
+        ->name('driver.request.reject');
+
+        // Route::get('/f-up-request', [FollowedUpRequestController::class, 'index'])
+        // ->name('technician.f-up-request');
+        // Route::get('/f-up-request/json', [FollowedUpRequestController::class, 'json'])
+        // ->name('technician.f-up-request.json');
+        // Route::get('/f-up-request/show/{id}', [FollowedUpRequestController::class, 'show'])
+        // ->name('technician.f-up-request.show');
+        // Route::get('/f-up-request/accept/{id}', [FollowedUpRequestController::class, 'accept'])
+        // ->name('technician.f-up-request.accept');
+        // Route::get('/f-up-request/cancel/{id}', [FollowedUpRequestController::class, 'cancel'])
+        // ->name('technician.f-up-request.cancel');
+        // Route::get('/f-up-request/finish/{id}', [FollowedUpRequestController::class, 'finish'])
+        // ->name('technician.f-up-request.finish');
+        // Route::get('/f-up-request/edit/{id}', [FollowedUpRequestController::class, 'edit'])
+        // ->name('technician.f-up-request.edit');
+        // Route::put('/f-up-request/update/{id}', [FollowedUpRequestController::class, 'update'])
+        // ->name('technician.f-up-request.update');
+        // Route::get('/f-up-request/reject/{id}', [FollowedUpRequestController::class, 'reject'])
+        // ->name('technician.f-up-request.reject');
+
+        // Route::get('/computer/json', [ComputerController::class, 'json'])
+        // ->name('computer.json');
+
+        // Route::get('/user/json', [UserController::class, 'json'])
+        // ->name('user.json');
+    });
+
+Route::prefix('cl')
+    ->middleware(['auth', 'is.cleaning'])
+    ->group(function(){
+        Route::get('/', [CleaningController::class, 'index'])
+        ->name('cleaning.dashboard');
+        Route::get('/profile', [CleaningController::class, 'profile'])
+        ->name('cleaning.profile');
+        Route::post('/store-profile', [CleaningController::class, 'profilestore'])
+        ->name('cleaning.storeprofile');
+
+        Route::get('/request/show/{id}', [CleaningController::class, 'show'])
+        ->name('cleaning.request.show');
+        Route::get('/request/accept/{id}', [CleaningController::class, 'accept'])
+        ->name('cleaning.request.accept');
+        Route::get('/request/cancel/{id}', [CleaningController::class, 'cancel'])
+        ->name('cleaning.request.cancel');
+        Route::get('/request/finish/{id}', [CleaningController::class, 'finish'])
+        ->name('cleaning.request.finish');
+        Route::get('/request/reject/{id}', [CleaningController::class, 'reject'])
+        ->name('cleaning.request.reject');
+    });
+
+Route::prefix('sc')
+    ->middleware(['auth', 'is.security'])
+    ->group(function(){
+        Route::get('/', [CleaningController::class, 'index'])
+        ->name('cleaning.dashboard');
+        Route::get('/profile', [CleaningController::class, 'profile'])
+        ->name('cleaning.profile');
+        Route::post('/store-profile', [CleaningController::class, 'profilestore'])
+        ->name('cleaning.storeprofile');
+
+        Route::get('/request/show/{id}', [CleaningController::class, 'show'])
+        ->name('cleaning.request.show');
+        Route::get('/request/accept/{id}', [CleaningController::class, 'accept'])
+        ->name('cleaning.request.accept');
+        Route::get('/request/cancel/{id}', [CleaningController::class, 'cancel'])
+        ->name('cleaning.request.cancel');
+        Route::get('/request/finish/{id}', [CleaningController::class, 'finish'])
+        ->name('cleaning.request.finish');
+        Route::get('/request/reject/{id}', [CleaningController::class, 'reject'])
+        ->name('cleaning.request.reject');
+    });
+
 Route::prefix('m')
     ->middleware(['auth', 'is.manager'])
     ->group(function(){
@@ -124,6 +220,13 @@ Route::prefix('m')
         ->name('manager.verified-request.verify');
         Route::get('/technician/json', [TechnicianController::class, 'json'])
         ->name('technician.json');
+        
+        Route::get('/verified-request/export-excel/{awal}/{akhir}', [ManagerDashboardController::class, 'exportExcel'])
+        ->name('manager.request.export_excel');
+        Route::get('/verified-request/data/test/{awal}/{akhir}', [ManagerDashboardController::class, 'getData']);
+        Route::get('/verified-request/data/{awal}/{akhir}', [ManagerDashboardController::class, 'data'])
+        ->name('manager.request.data');
+        
 
         Route::resources([
             'technician'    => TechnicianController::class

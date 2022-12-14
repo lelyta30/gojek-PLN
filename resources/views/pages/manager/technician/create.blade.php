@@ -72,9 +72,16 @@
 
                             <div class="form-group">
                                 <label for="role" class="form-control-label">Role</label>
-                                <input type="role" class="form-control @error('role') is-invalid @enderror" 
+                                {{-- <input type="role" class="form-control @error('role') is-invalid @enderror" 
                                     name="role" id="role" placeholder="Role" 
-                                    value="">
+                                    value=""> --}}
+                                <select class="form-control @error('role') is-invalid @enderror" name="role" id="role">
+                                    <option value="TECHNICIAN">TECHNICIAN</option>
+                                    <option value="DRIVER">DRIVER</option>
+                                    <option value="SECURITY">SECURITY</option>
+                                    <option value="CLEANING">CLEANING SERVICE</option>
+                                    <option value="USER">USER</option>
+                                </select>
                                 @error('role')
                                 @include('includes.error-field')
                                 @enderror
@@ -82,12 +89,16 @@
 
                             <div class="form-group">
                                 <label for="no_hp" class="form-control-label">Phone Number</label>
-                                <input type="no_hp" class="form-control @error('no_hp') is-invalid @enderror" 
+                                <br>
+                                {{-- <div class="col"></div> --}}
+                                <label for="62" class="col-form-control">+62</label>
+                                <input type="no_hp" class="col-form-control @error('no_hp') is-invalid @enderror" 
                                     name="no_hp" id="no_hp" placeholder="Phone Number" 
                                     value="">
-                                @error('no_hp')
-                                @include('includes.error-field')
-                                @enderror
+                                    @error('no_hp')
+                                    @include('includes.error-field')
+                                    @enderror
+
                             </div>
 
                             @include('includes.save-cancel-btn')

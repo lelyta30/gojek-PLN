@@ -22,6 +22,10 @@ class WhichHome
             return redirect('/t');
         elseif(Auth::user() && (Auth::user()->role == 'MANAGER'))
             return redirect('/m');
+        elseif(Auth::user() && (Auth::user()->role == 'DRIVER'))
+            return redirect('/d');
+        elseif(Auth::user() && (Auth::user()->role == 'CLEANING'))
+            return redirect('/cl');    
         return response('Unauthorized. <a href="javascript:history.back()">Go Back</a>', 401);
     }
 }

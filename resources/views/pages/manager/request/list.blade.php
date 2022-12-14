@@ -25,13 +25,15 @@
                      <div class="card-header ">
                          <h4 class="card-title">List Request Diverifikasi</h4>
                          <p class="card-category">Request dari semua user</p>
+                         <button onclick="updatePeriode()" class="btn btn-info btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Ubah Periode</button>
+                         <a href="{{ route('manager.request.export_excel', [$tanggalAwal, $tanggalAkhir]) }}" target="_blank" class="btn btn-success btn-xs btn-flat"><i class="fa fa-file-excel-o"></i> Export Excel</a>
                      </div>
                      <div class="card-body ">
- 
                          <div class="table-responsive overflow-auto">
                              <table class="table table-bordered" id="verified-request-table" width="100%" cellspacing="0">
                                  <thead>
                                      <tr>
+                                        <th>No</th>
                                         <th>ID</th>
                                         <th>Tanggal Request</th>
                                         <th>Jenis Permohonan</th>
@@ -51,35 +53,49 @@
  </div>
  
  @endsection
+ @includeIf('pages.manager.request.form')
  
  @push('after-style')
  {{-- Datatables  --}}
  <link href="{{ asset('assets/css/datatables.min.css') }}" rel="stylesheet" />
+ <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
  @endpush
  
  @push('after-script')
  {{-- DataTables  --}}
  <script src="{{ asset('assets/js/datatables.min.js') }}" type="text/javascript"></script>
- 
+ <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
  <script>
      $(function () {
          $('#verified-request-table').DataTable({
-             processing: true,
-             serverSide: true,
-             ajax: '{{ route('manager.verified-request.json') }}',
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            ajax: {
+                url: "{{ route('manager.request.data', [$tanggalAwal, $tanggalAkhir]) }}"
+            },
              columns: [
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'id'},
-                {data: 'tanggal'},
-                {data: 'jenis_permintaan'},
+                {data: 'tanggal_request'},
+                {data: 'jenis_permohonan'},
                 {data: 'nama_penyervis'},
-                {data: 'description', name: 'description'},
+                {data: 'deskripsi'},
                 {data: 'status'},
                 {data: 'rating'},
              ],
-             order: [0, 'desc'],
-             stateSave: true
          });
-     });
+         $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+
+    });
+    function updatePeriode() {
+        $('#modal-form').modal('show');
+    }
+     
  
  </script>
  @endpush

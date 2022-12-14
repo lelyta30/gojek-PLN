@@ -87,7 +87,8 @@ class RequestController extends Controller
         $roles = array();
         $roles[0] = 'TECHNICIAN';
         $roles[1] = 'DRIVER';
-        $roles[2] = 'CUSTOMER_SERVICE';
+        $roles[2] = 'CLEANING';
+        $roles[3] = 'SECURITY';
 
         return view('pages.user.request.create', compact('roles'));
     }
@@ -99,9 +100,9 @@ class RequestController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function store(Request $request, $id) {
+    public function store(Request $request) {
 
-        $order   = UserRequest::findOrFail($id);
+        $order   = new UserRequest();
         $order->client_id = $request->client_id;
         $order->request_created_date = $request->request_created_date;
         $order->id_requested = $request->requested_id;
@@ -209,4 +210,5 @@ class RequestController extends Controller
 
         return response()->json($data);
     }
+
 }
