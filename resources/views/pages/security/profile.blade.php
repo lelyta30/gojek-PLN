@@ -73,6 +73,14 @@
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="no_hp" class="col-lg-2 control-label">Nomor Ponsel</label>
+                        <div class="col-lg-6">
+                            <input type="text" name="no_hp" id="no_hp" class="form-control" 
+                                >
+                            <span class="help-block with-errors"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="box-footer text-right">
                     <button class="btn btn-sm btn-flat btn-primary"><i class="fa fa-save"></i> Simpan Perubahan</button>

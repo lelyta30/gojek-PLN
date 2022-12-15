@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Models\UserRequest;
 use App\Models\FollowedUpRequest;
+use App\Models\User;
 use App\Models\VerifiedRequest;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -22,31 +23,23 @@ class ManagerDashboardController extends Controller
     {
         $req_today_count                    = UserRequest::where('request_created_date', date('Y-m-d'))
         ->count();
-        $req_not_finished_yet_today_count   = FollowedUpRequest::whereHas('user_request', function($query) {
-            $query->where([
-                ['request_created_date', '=', date('Y-m-d')],
-                ['is_done',              '=', 'BELUM SELESAI']
-            ]);
-        })->count();
+        $req_not_finished_yet_today_count   = UserRequest::where('request_created_date', date('Y-m-d'))
+        ->whereIn('status',  ['Ordering', 'In-Progress'])
+        ->count();
 
         // App\Referential::whereHas('certifications.users', function($query) use($user) {
         //     $query->where('users.id', $user->id);
         //  });
         $req_alltime_count                  = UserRequest::count();
-        $req_not_finished_yet_alltime_count = FollowedUpRequest::where('is_done', 'BELUM SELESAI')->count();
+        $req_not_finished_yet_alltime_count = UserRequest::whereIn('status',  ['Ordering', 'In-Progress'])->count();
 
-        $req_today            = VerifiedRequest::whereHas('followed_up_request', function($query){
-            $query->whereHas('user_request', function($query2){
-                $query2->where('request_created_date', date('Y-m-d'));
-            });
-        })
+        $req_today            = UserRequest::where('request_created_date', date('Y-m-d'))
         ->orderBy('created_at', 'desc')
         ->paginate(3);
 
         // $req_not_finished_yet = FollowedUpRequest::where('is_done', 'BELUM SELESAI')
-        $req_not_finished_yet = VerifiedRequest::whereHas('followed_up_request', function($query){
-            $query->where('is_done', 'BELUM SELESAI');
-        })
+        $req_not_finished_yet = UserRequest::where('request_created_date', date('Y-m-d'))
+        ->whereIn('status', ['Ordering', 'In-Progress'])
         ->orderBy('created_at', 'desc')
         ->paginate(3);
 
@@ -54,7 +47,7 @@ class ManagerDashboardController extends Controller
             'req_today_count'                   => $req_today_count,
             'req_not_finished_yet_today_count'  => $req_not_finished_yet_today_count,
             'req_alltime_count'                 => $req_alltime_count,
-            'req_not_finished_yet_alltime_count'=> $req_not_finished_yet_today_count,
+            'req_not_finished_yet_alltime_count'=> $req_not_finished_yet_alltime_count,
             'req_today'                         => $req_today,
             'req_not_finished_yet'              => $req_not_finished_yet,
         ]);
@@ -67,12 +60,14 @@ class ManagerDashboardController extends Controller
         $data = array();
         $no = 0;
         foreach ($userrequest as $req) {
+            $requested_name = User::findOrFail($req->id_requested);
             $row = array();
             $row['DT_RowIndex'] = ++$no;
             $row['id'] = $req->id;
             $row['tanggal_request'] = $req->request_created_date;
             $row['jenis_permohonan'] = $req->jenis_permintaan;
-            $row['nama_penyervis'] = $req->user->name;
+            $row['nama_client'] = $req->user->name;
+            $row['nama_penyervis'] = $requested_name->name;
             $row['deskripsi'] = $req->description;
             $row['status'] = $req->status;
             $row['rating'] = $req->rating;

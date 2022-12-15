@@ -40,12 +40,16 @@
                                         <td>{{ $item->request_created_date }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Pemohon</th>
-                                        <td>{{ $item->user->name }}</td>
+                                        <th>Jenis Permintaan</th>
+                                        <td>{{ $item->jenis_permintaan }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Jenis jenis_permintaan</th>
-                                        <td>{{ $item->jenis_permintaan }}</td>
+                                        <th>Nama Penyervis</th>
+                                        <td>{{ $penyervis->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pemohon</th>
+                                        <td>{{ $item->user->name }}</td>
                                     </tr>
                                     <tr>
                                         <th>Deskripsi</th>
@@ -89,12 +93,17 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>Kontak</th>
+                                        <td><a href="http://wa.me/{{ $penyervis->no_hp }}"> {{ $penyervis->no_hp }}</a></td>
+                                    </tr>
                                     @if($item->status=="Finished")
                                     <tr>
                                         <th>Rating</th>
                                         <td>{{ $item->rating }}</td>
                                     </tr>
                                     @endif
+                                    
                                 </thead>
                             </table>
                         </div>

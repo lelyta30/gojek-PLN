@@ -37,7 +37,8 @@
                                         <th>ID</th>
                                         <th>Tanggal Request</th>
                                         <th>Jenis Permohonan</th>
-                                        <th>Nama Penyervis</th>
+                                        <th>Client</th>
+                                        <th>Penyervis</th>
                                         <th>Deskripsi</th>
                                         <th>Status</th>
                                         <th>Rating</th>
@@ -51,7 +52,7 @@
          </div>
      </div>
  </div>
- 
+
  @endsection
  @includeIf('pages.manager.request.form')
  
@@ -80,6 +81,7 @@
                 {data: 'id'},
                 {data: 'tanggal_request'},
                 {data: 'jenis_permohonan'},
+                {data: 'nama_client'},
                 {data: 'nama_penyervis'},
                 {data: 'deskripsi'},
                 {data: 'status'},

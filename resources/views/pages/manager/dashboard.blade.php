@@ -136,7 +136,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($req_today as $item)
+                                    @forelse ($req_not_finished_yet as $item)
                                     <tr>
                                        <td>{{ $item->id }}</td>
                                        <td>{{ $item->request_created_date }}</td>

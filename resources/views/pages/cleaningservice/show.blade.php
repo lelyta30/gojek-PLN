@@ -48,6 +48,10 @@
                                         <td>{{ $item->jenis_permintaan }}</td>
                                     </tr>
                                     <tr>
+                                        <th>Nama Penyervis</th>
+                                        <td>{{ $penyervis->name }}</td>
+                                    </tr>
+                                    <tr>
                                         <th>Deskripsi</th>
                                         <td>{{ $item->description }}</td>
                                     </tr>

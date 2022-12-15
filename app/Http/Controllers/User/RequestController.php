@@ -149,9 +149,11 @@ class RequestController extends Controller
 
     public function show($id) {
         $item = UserRequest::findOrFail($id);
+        $penyervis = User::findOrFail($item->id_requested);
 
         return view('pages.user.request.show', [
-            'item'  => $item 
+            'item'  => $item,
+            'penyervis' => $penyervis
         ]);
     }
 
