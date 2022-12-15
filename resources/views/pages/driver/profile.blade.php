@@ -85,7 +85,7 @@
  </div>
 @endsection
 
-{{-- @push('scripts')
+@push('scripts')
 <script>
     $(function () {
         $('#old_password').on('keyup', function () {
@@ -124,5 +124,5 @@
             }
         });
     });
-</script> --}}
-{{-- @endpush --}}
+</script>
+@endpush
