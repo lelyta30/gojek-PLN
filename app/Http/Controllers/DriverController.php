@@ -35,18 +35,21 @@ class DriverController extends Controller
     }
 
     public function profile(){
-        return view('pages.driver.profile');
+        $profil = Auth::user();        
+        return view('pages.driver.profile', compact('profil'));
     }
 
     public function profilestore(Request $request){
 
+        // dd($request->foto);
+
         $this->validate($request, [
-			'foto_profil' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+			'foto' => 'file|image|mimes:jpeg,png,jpg|max:2048',
 		]);
 
-        $user = User::findOrFail(Auth::user()->id);
-        $user->nama = $request->nama;
-        $user->no_hp = $request->no_hp;
+        $user = Auth::user();        
+        $user->name = $request->name;
+        $user->no_hp = $request->no_hp;        
         
         if ($request->has('password') && $request->password != "") {
             if (Hash::check($request->old_password, $user->password)) {
@@ -60,13 +63,15 @@ class DriverController extends Controller
             }
         }
 
-        if ($request->hasFile('foto_profil')) {
-            $file = $request->file('foto_profil');
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
             $nama = date('YmdHis') . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('/img'), $nama);
 
-            $user->foto = "/img/$nama";
+            $user->foto_profil = "/img/$nama";
         }
+
+        $user->save();
 
         return redirect()->route('driver.dashboard');
     }

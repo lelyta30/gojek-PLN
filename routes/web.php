@@ -54,7 +54,7 @@ Route::prefix('/')
         Route::get('/request/show/{id}', [RequestController::class, 'show'])
         ->name('user.request.show');
         Route::post('/request/store', [RequestController::class, 'store'])
-        ->name('user.request.store');
+        ->name('user.re`quest.store');
         Route::get('/request/print/{id}', [RequestController::class, 'printPreview'])
         ->name('user.request.print');
         Route::get('/request/cancel/{id}', [RequestController::class, 'cancel'])

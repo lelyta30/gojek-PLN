@@ -23,23 +23,37 @@ class ManagerDashboardController extends Controller
     {
         $req_today_count                    = UserRequest::where('request_created_date', date('Y-m-d'))
         ->count();
+<<<<<<< HEAD
         $req_not_finished_yet_today_count   = UserRequest::where('request_created_date', date('Y-m-d'))
         ->whereIn('status',  ['Ordering', 'In-Progress'])
         ->count();
+=======
+        $req_not_finished_yet_today_count   = UserRequest::where('request_created_date', date('Y-m-d'))->whereIn('status', ['Ordering', 'In-Progress'])->count();
+>>>>>>> 70186b571acbe024751dde636459c3006d04ba52
 
         // App\Referential::whereHas('certifications.users', function($query) use($user) {
         //     $query->where('users.id', $user->id);
         //  });
         $req_alltime_count                  = UserRequest::count();
+<<<<<<< HEAD
         $req_not_finished_yet_alltime_count = UserRequest::whereIn('status',  ['Ordering', 'In-Progress'])->count();
+=======
+        $req_not_finished_yet_alltime_count = UserRequest::whereIn('status', ['Ordering', 'In-Progress'])
+        ->count();
+
+>>>>>>> 70186b571acbe024751dde636459c3006d04ba52
 
         $req_today            = UserRequest::where('request_created_date', date('Y-m-d'))
         ->orderBy('created_at', 'desc')
         ->paginate(3);
 
         // $req_not_finished_yet = FollowedUpRequest::where('is_done', 'BELUM SELESAI')
+<<<<<<< HEAD
         $req_not_finished_yet = UserRequest::where('request_created_date', date('Y-m-d'))
         ->whereIn('status', ['Ordering', 'In-Progress'])
+=======
+        $req_not_finished_yet = UserRequest::where('request_created_date', date('Y-m-d'))->whereIn('status', ['Ordering', 'In-Progress'])
+>>>>>>> 70186b571acbe024751dde636459c3006d04ba52
         ->orderBy('created_at', 'desc')
         ->paginate(3);
 

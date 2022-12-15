@@ -75,7 +75,6 @@ class TechnicianController extends Controller
         $data               = $request->except('confirm_password', 'no_hp');
         $data['no_hp']      = '62'.$request->no_hp;
         $data['password']   = Hash::make($data['password']);
-        $data['dept_code']  = '0';
         $data['foto_profil'] = 'null';
         $data['rating'] = 3;
         // dd($data);

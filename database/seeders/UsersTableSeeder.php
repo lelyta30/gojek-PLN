@@ -20,43 +20,37 @@ class UsersTableSeeder extends Seeder
                 'name'      => 'User',
                 'username'  => 'user',
                 'password'  => Hash::make('user'),
-                'dept_code' => 3200,
-                'role'      => 'USER'
-            ],
-            [
-                'name'      => 'Roni',
-                'username'  => 'roni',
-                'password'  => Hash::make('roni'),
-                'dept_code' => 3100,
-                'role'      => 'USER'
-            ],
-            [
-                'name'      => 'Ridho',
-                'username'  => 'ridho',
-                'password'  => Hash::make('ridho'),
-                'dept_code' => 3200,
-                'role'      => 'USER'
+                'role'      => 'USER',
+                'no_hp'     => '628231732112',
+                'foto_profil'   => '628231732112',
+                'rating'     => '3',
             ],
             [
                 'name'      => 'Tec',
                 'username'  => 'tec',
                 'password'  => Hash::make('tec'),
-                'dept_code' => 3300,
-                'role'     => 'TECHNICIAN'
+                'role'      => 'TECHNICIAN',
+                'no_hp'     => '628231733312',
+                'foto_profil'   => '628232342112',
+                'rating'     => '3',
             ],
             [
                 'name'      => 'Man',
                 'username'  => 'man',
                 'password'  => Hash::make('man'),
-                'dept_code' => 3300,
-                'role'      => 'MANAGER'
+                'role'      => 'MANAGER',
+                'no_hp'     => '6282317322112',
+                'foto_profil'   => '6282317732112',
+                'rating'     => '3',
             ],
             [
-                'name'      => 'Fajar',
-                'username'  => 'fajar',
-                'password'  => Hash::make('fajar'),
-                'dept_code' => 3300,
-                'role'     => 'TECHNICIAN'
+                'name'      => 'Driver',
+                'username'  => 'driver',
+                'password'  => Hash::make('driver'),
+                'role'      => 'DRIVER',
+                'no_hp'     => '6248231732112',
+                'foto_profil'   => '6248231732112',
+                'rating'     => '3',
             ],
         ]);
     }

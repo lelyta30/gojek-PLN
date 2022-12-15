@@ -16,13 +16,12 @@ class CreateRequestsTable extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->date('request_created_date');
-            $table->string('client_name', 100);
-            $table->integer('department_id');
-            $table->integer('computer_id');
-            $table->integer('break_id');
-            $table->enum('kind_of_repair', ['PERBAIKAN', 'FASILITAS']);
-            $table->text('description')->nullable();
-
+            $table->integer('client_id');
+            $table->integer('id_requested');
+            $table->string('jenis_permintaan');
+            $table->string('status');
+            $table->integer('rating');
+            $table->string('description');
             $table->softDeletes();
             $table->timestamps();
         });
