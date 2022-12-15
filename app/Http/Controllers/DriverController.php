@@ -35,7 +35,8 @@ class DriverController extends Controller
     }
 
     public function profile(){
-        return view('pages.driver.profile');
+        $profil = Auth::user();        
+        return view('pages.driver.profile', compact('profil'));
     }
 
     public function profilestore(Request $request){
