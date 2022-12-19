@@ -24,6 +24,12 @@ Tip 2: you can also add an image using data-image tag
                   <i class="nc-icon nc-bullet-list-67"></i>
                   <p>List Request</p>
               </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{{ route('user.profile') }}">
+                  <i class="nc-icon nc-fav-remove"></i>
+                  <p>Profil</p>
+              </a>
             </li>    
           @endif
           

@@ -31,6 +31,8 @@
                         <div class="table-responsive overflow-auto">
                             <table class="table table-bordered" width="100%" cellspacing="0">
                                 <thead>
+                                    <img src="{{ url($penyervis->foto_profil ?? '/') }}" width="200" id="foto_profil" class="rounded-circle shadow-4-strong mx-auto d-block">
+                                    <br>
                                     <tr>
                                         <th>ID</th>
                                         <td>{{ $item->id }}</td>

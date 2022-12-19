@@ -121,4 +121,5 @@ class FollowedUpRequestController extends Controller
 
         return redirect()->route('technician.f-up-request');
     }
+    
 }

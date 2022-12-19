@@ -14,7 +14,7 @@
  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  -->
  @extends('layouts.app')
 
- @section('title', 'IKET - Technician Dashboard')
+ @section('title', 'IKET - Driver Dashboard')
  
  @section('content')
  <div class="content">
@@ -73,6 +73,14 @@
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="no_hp" class="col-lg-2 control-label">Nomor Ponsel</label>
+                        <label for="no_hp" class="control-label">+62</label>
+                        <div class="col-lg-6">
+                            <input type="no_hp" name="no_hp" id="no_hp" class="form-control">
+                            <span class="help-block with-errors"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="box-footer text-right">
                     <button class="btn btn-sm btn-flat btn-primary"><i class="fa fa-save"></i> Simpan Perubahan</button>
@@ -83,7 +91,7 @@
 </div>
     </div>
  </div>
- <script>
+<script>
     let loadFile = function (event) {
         let image = document.getElementById("foto_profil");
         image.src = URL.createObjectURL(event.target.files[0]);

@@ -65,6 +65,10 @@ Route::prefix('/')
         ->name('user.request.delete');
         Route::post('/request/rating/{id}', [RequestController::class, 'rating'])
         ->name('user.request.rating');
+        Route::get('/profile', [RequestController::class, 'profile'])
+        ->name('user.profile');
+        Route::post('/store-profile', [RequestController::class, 'profilestore'])
+        ->name('user.storeprofile');
 
         Route::get('/dropdown', [RequestController::class, 'DropdownRole'])->name('user.request.dropdown');
         Route::post('/api/fetch-dropdown/{role}', [RequestController::class, 'getRole'])->name('user.request.dropdown.getRole');

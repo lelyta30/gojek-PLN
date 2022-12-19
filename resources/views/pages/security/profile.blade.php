@@ -22,7 +22,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="box">
-            <form action="{{ route('driver.storeprofile')}}" method="post" class="form-profil" data-toggle="validator" enctype="multipart/form-data">
+            <form action="{{ route('security.storeprofile')}}" method="post" class="form-profil" data-toggle="validator" enctype="multipart/form-data">
                 @csrf
                 <div class="box-body">
                     <div class="alert alert-info alert-dismissible" style="display: none;">
@@ -75,9 +75,9 @@
                     </div>
                     <div class="form-group row">
                         <label for="no_hp" class="col-lg-2 control-label">Nomor Ponsel</label>
+                        <label for="no_hp" class="control-label">+62</label>
                         <div class="col-lg-6">
-                            <input type="text" name="no_hp" id="no_hp" class="form-control" 
-                                >
+                            <input type="no_hp" name="no_hp" id="no_hp" class="form-control">
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>

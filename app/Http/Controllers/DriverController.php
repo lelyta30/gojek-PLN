@@ -49,7 +49,7 @@ class DriverController extends Controller
 
         $user = Auth::user();        
         $user->name = $request->name;
-        $user->no_hp = $request->no_hp;        
+        $user->no_hp = '62'.$request->no_hp;        
         
         if ($request->has('password') && $request->password != "") {
             if (Hash::check($request->old_password, $user->password)) {
