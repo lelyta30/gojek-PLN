@@ -142,6 +142,21 @@ class RequestController extends Controller
         return response()->json(['data' => $data]);
     }
 
+    public function update(Request $request) {
+
+        $order = UserRequest::findOrFail($request->id);
+        $order->client_id = $request->client_id;
+        $order->request_created_date = $request->request_created_date;
+        $order->id_requested = $request->requested_id;
+        $order->jenis_permintaan = $request->jenis_permohonan;
+        $order->description = $request->description;
+        $order->rating = 0;
+        $order->status = 'Ordering';
+        $order->update();
+
+        return redirect()->route('user.request'); 
+    }
+
     public function store(Request $request) {
 
         $order   = new UserRequest();
@@ -245,7 +260,7 @@ class RequestController extends Controller
 
     public function edit(Request $request)
     {   
-        $item = UserRequest::findOrFail($request->id)
+        $item = UserRequest::findOrFail($request->id);
 
         return view('pages.user.request.edit', compact('item'));
     }

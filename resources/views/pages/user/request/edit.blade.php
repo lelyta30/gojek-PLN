@@ -28,7 +28,7 @@
                         <p class="card-category">Silakan isi form di bawah ini.</p>
                     </div>
                     <div class="card-body ">
-                        <form id="createForm" method="POST" action="{{ route('user.request.store') }}">
+                        <form id="createForm" method="POST" action="{{ route('user.request.update') }}">
                             @csrf
                             <div class="form-group">
                                 <label for="request_created_date" class="form-control-label">Tanggal Request</label>

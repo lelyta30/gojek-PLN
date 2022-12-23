@@ -53,6 +53,8 @@ Route::prefix('/')
         ->name('user.request.create');
         Route::get('/request/edit', [RequestController::class, 'edit'])
         ->name('user.request.edit');
+        Route::get('/request/update', [RequestController::class, 'update'])
+        ->name('user.request.update');
         Route::get('/request/show/{id}', [RequestController::class, 'show'])
         ->name('user.request.show');
         Route::post('/request/store', [RequestController::class, 'store'])
