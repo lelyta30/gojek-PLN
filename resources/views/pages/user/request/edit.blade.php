@@ -57,15 +57,17 @@
                                 value="">
                                     <option selected disabled>-- Select Role --</option>
                                     @foreach($roles as $role)
-                                        <option value="{{ $role }}" {{ ($item->jenis_permintaan) ? 'selected' : "" }}>{{ $role }}</option>
+                                        <option value="{{ $role }}" {{ $item->jenis_permintaan == $role  ? 'selected' : "" }}>{{ $role }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             
                             <div class="form-group">
                                 <label for="requested_id" class="form-control-label">Nama Penyervis</label>
-                                <select class="form-control @error('requested_id') is-invalid @enderror"
-                                name="requested_id" id="requested_id">                            
+                                <select class="form-control @error('requested_id') is-invalid @enderror" name="requested_id" id="requested_id">                                              
+                                    @foreach($users as $user)                                                      
+                                        <option value="{{ $user->id }}" {{ $user->id == $item->id_requested ? 'selected': "" }}>{{ $user->name }}</option>
+                                    @endforeach
                                 </select>
                                     {{-- <span class="input-group-btn">
                                         <button onclick="tampilTeknisi()" class="btn btn-info btn-flat" type="button"><i class="fa fa-arrow-right"></i></button>
@@ -100,12 +102,12 @@
 @push('scripts')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-   $(document).ready(function() {        
+   $(document).ready(function() {                      
         $('#jenis_permohonan').on('change', function() {        
             var name = this.value;            
-            // $("#requested_id").html('');
+            $("#requested_id").html('');
             $.ajax({
-                url: `api/fetch-dropdown/${name}`,
+                url: `/api/fetch-dropdown/${name}`,
                 type: "POST",
                 data: {
                     role: name,

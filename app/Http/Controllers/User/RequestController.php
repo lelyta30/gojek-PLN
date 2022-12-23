@@ -260,7 +260,8 @@ class RequestController extends Controller
 
     public function edit(Request $request)
     {   
-        $item = UserRequest::findOrFail($request->id);
+        $item = UserRequest::findOrFail($request->id);        
+        $users = User::where('role', $item->jenis_permintaan)->get();        
 
         $roles = array();
         $roles[0] = 'TECHNICIAN';
@@ -268,7 +269,7 @@ class RequestController extends Controller
         $roles[2] = 'CLEANING';
         $roles[3] = 'SECURITY';
 
-        return view('pages.user.request.edit', compact('item','roles'));
+        return view('pages.user.request.edit', compact('item','roles', 'users'));
     }
 
 }
