@@ -243,16 +243,11 @@ class RequestController extends Controller
         return view('pages.user.request.rating', compact('item'));
     }
 
-    public function loadForm($diskon = 0, $total = 0, $diterima = 0, $ppn = 0)
-    {
-        $didiskon = $total - ($diskon / 100 * $total);
-        $bayar   = $didiskon + ($ppn / 100 * $didiskon);
-        $kembali = ($diterima != 0) ? $diterima - $bayar : 0;
-        $data    = [
-            'bayar' => $bayar,
-        ];
+    public function edit(Request $request)
+    {   
+        $item = UserRequest::findOrFail($request->id)
 
-        return response()->json($data);
+        return view('pages.user.request.edit', compact('item'));
     }
 
 }
