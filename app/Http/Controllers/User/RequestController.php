@@ -262,7 +262,13 @@ class RequestController extends Controller
     {   
         $item = UserRequest::findOrFail($request->id);
 
-        return view('pages.user.request.edit', compact('item'));
+        $roles = array();
+        $roles[0] = 'TECHNICIAN';
+        $roles[1] = 'DRIVER';
+        $roles[2] = 'CLEANING';
+        $roles[3] = 'SECURITY';
+
+        return view('pages.user.request.edit', compact('item','roles'));
     }
 
 }

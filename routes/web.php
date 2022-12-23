@@ -51,14 +51,14 @@ Route::prefix('/')
         ->name('user.request.json');
         Route::get('/request/create', [RequestController::class, 'create'])
         ->name('user.request.create');
-        Route::get('/request/edit', [RequestController::class, 'edit'])
+        Route::get('/request/edit/{id}', [RequestController::class, 'edit'])
         ->name('user.request.edit');
         Route::get('/request/update', [RequestController::class, 'update'])
         ->name('user.request.update');
         Route::get('/request/show/{id}', [RequestController::class, 'show'])
         ->name('user.request.show');
         Route::post('/request/store', [RequestController::class, 'store'])
-        ->name('user.re`quest.store');
+        ->name('user.request.store');
         Route::get('/request/print/{id}', [RequestController::class, 'printPreview'])
         ->name('user.request.print');
         Route::get('/request/cancel/{id}', [RequestController::class, 'cancel'])

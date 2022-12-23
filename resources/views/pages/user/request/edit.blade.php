@@ -57,25 +57,10 @@
                                 value="">
                                     <option selected disabled>-- Select Role --</option>
                                     @foreach($roles as $role)
-                                        <option value="{{ $role }}">{{ $role }}</option>
+                                        <option value="{{ $role }}" {{ ($item->jenis_permintaan) ? 'selected' : "" }}>{{ $role }}</option>
                                     @endforeach
                                 </select>
                             </div>
-
-                            {{-- <div class="form-group">
-                                <label for="jenis_permohonan" class="form-control-label">Jenis Permohonan</label>
-                                <br>
-                                <select class="custom-select" class="form-control @error('jenis_permohonan') is-invalid @enderror"
-                                name="jenis_permohonan" id="jenis_permohonan" placeholder="Jenis Permohonan"
-                                value="">
-                                    <option value="TECHNICIAN">Teknisi</option>
-                                    <option value="DRIVER">Driver</option>
-                                    <option value="CUSTOMER_SERVICE">Customer Service</option>
-                                </select>
-                                @error('jenis_permohonan')
-                                @include('includes.error-field')
-                                @enderror
-                            </div> --}}
                             
                             <div class="form-group">
                                 <label for="requested_id" class="form-control-label">Nama Penyervis</label>
@@ -119,7 +104,6 @@
         $('#jenis_permohonan').on('change', function() {        
             var name = this.value;            
             // $("#requested_id").html('');
-            
             $.ajax({
                 url: `api/fetch-dropdown/${name}`,
                 type: "POST",
@@ -138,47 +122,3 @@
         });
     });
 </script>
-{{-- <script>
-     function tampilTeknisi() {
-        $('#modal-teknisi').modal('show');
-    }
-
-    function hideTeknisi() {
-        $('#modal-teknisi').modal('hide');
-    }
-
-    function pilihTeknisi(id, nama) {
-        $('#id_produk').val(id);
-        $('#nama').val(nama);
-        hideTeknisi();
-        tambahTeknisi();
-    }
-
-    function tambahTeknisi() {
-
-    }
-
-    function loadForm(diskon = 0, diterima = 0, ppn = 0) {
-        $('#jenis_permohonan').val($('.total').text());
-        $('#total_item').val($('.total_item').text());
-
-        $.get(`{{ url('/transaksi/loadform') }}/${diskon}/${$('.total').text()}/${diterima}/${ppn}`)
-            .done(response => {
-                $('#totalrp').val('Rp. ' + response.totalrp);
-                $('#bayarrp').val('Rp. ' + response.bayarrp);
-                $('#bayar').val(response.bayar);
-                $('.tampil-bayar').text('Bayar: Rp. ' + response.bayarrp);
-                $('.tampil-terbilang').text(response.terbilang);
-
-                $('#kembali').val('Rp.' + response.kembalirp);
-                if ($('#diterima').val() != 0) {
-                    $('.tampil-bayar').text('Kembali: Rp. ' + response.kembalirp);
-                    $('.tampil-terbilang').text(response.kembali_terbilang);
-                }
-            })
-            .fail(errors => {
-                alert('Tidak dapat menampilkan data');
-                return;
-            })
-    }    
-</script> --}}
