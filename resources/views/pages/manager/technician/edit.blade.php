@@ -29,8 +29,8 @@
                     </div>
                     <div class="card-body ">
                         <form id="createForm" method="POST"
-                            action="{{ route('technician.update', $item->id) }}">
-                            @method('PUT')
+                            action="{{ route('manager.user.update', $item->id) }}">
+                            @method('POST')
                             @csrf
 
                             <input type="hidden" name="is_edit" id="is_edit" value="true"/>
@@ -51,6 +51,53 @@
                                     name="name" id="name" placeholder="Nama"
                                     value="{{ $item->name }}">
                                 @error('name')
+                                @include('includes.error-field')
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="form-control-label">Password</label>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    name="password" id="password" placeholder="password"
+                                    value="">
+                                @error('password')
+                                @include('includes.error-field')
+                                @enderror
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="role" class="form-control-label">Role</label>
+                                <select class="form-control @error('role') is-invalid @enderror" name="role" id="role">
+                                    <option value="TECHNICIAN" {{ $item->role ? 'selected': "" }}>TECHNICIAN</option>
+                                    <option value="DRIVER" {{ $item->role ? 'selected': "" }} >DRIVER</option>
+                                    <option value="SECURITY"{{ $item->role ? 'selected': "" }} >SECURITY</option>
+                                    <option value="CLEANING"{{ $item->role ? 'selected': "" }}>CLEANING SERVICE</option>
+                                    <option value="USER"{{ $item->role ? 'selected': "" }}>USER</option>
+                                </select>
+                                @error('role')
+                                @include('includes.error-field')
+                                @enderror
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="no_hp" class="col-lg-2 control-label">Nomor Ponsel</label>
+                                <label for="no_hp2" class="control-label">+62</label>
+                                <div class="col-lg-6">
+                                    <input type="no_hp" name="no_hp" id="no_hp" class="form-control" value="{{ $item->no_hp}}">
+                                    <span class="help-block with-errors"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="rating" class="form-control-label">Rating</label>
+                                <select class="form-control @error('rating') is-invalid @enderror" name="rating" id="rating">
+                                    <option value="1" {{ $item->rating ? 'selected': "" }}>1</option>
+                                    <option value="2" {{ $item->rating ? 'selected': "" }} >2</option>
+                                    <option value="3"{{ $item->rating ? 'selected': "" }} >3</option>
+                                    <option value="4"{{ $item->rating ? 'selected': "" }}>4</option>
+                                    <option value="5"{{ $item->rating ? 'selected': "" }}>5</option>
+                                </select>
+                                @error('rating')
                                 @include('includes.error-field')
                                 @enderror
                             </div>

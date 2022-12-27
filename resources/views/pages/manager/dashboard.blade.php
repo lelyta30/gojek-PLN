@@ -87,7 +87,7 @@
                                      <tr>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->request_created_date }}</td>
-                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ $item->user->name ?? '' }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>
@@ -140,7 +140,7 @@
                                     <tr>
                                        <td>{{ $item->id }}</td>
                                        <td>{{ $item->request_created_date }}</td>
-                                       <td>{{ $item->user->name }}</td>
+                                       <td>{{ $item->user->name ?? '' }}</td>
                                        <td>{{ $item->description }}</td>
                                        <td>{{ $item->status }}</td>
                                        <td>

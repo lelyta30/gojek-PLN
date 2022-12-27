@@ -39,9 +39,14 @@ class TechnicianController extends Controller
             })
             ->addColumn('action', function($data){
                 $btn = '<a 
-                 href="/user/destroy/'.$data->id.'" 
+                 href="/m/user/destroy/'.$data->id.'" 
                  class="btn btn-danger btn-sm mb-2" id="">
                  <i class="fas fa-trash"></i>&nbsp;&nbsp;Delete
+                 </a>
+                 <a 
+                 href="/m/user/edit/'.$data->id.'" 
+                 class="btn btn-danger btn-sm mb-2" id="">
+                 <i class="fas fa-trash"></i>&nbsp;&nbsp;Edit
                  </a>';
     
                  return $btn;
@@ -98,11 +103,15 @@ class TechnicianController extends Controller
         ]);
     }
 
-    public function update(ManAddTechRequest $request, $id) {
-        $data = $request->except('username');
-        $item = User::findOrFail($id);
+    public function update(ManAddTechRequest $request, $id){
+        
+        $item = User::findOrFail($id);       
+        $item->name = $request->name;
+        $item->no_hp = '62'.$request->no_hp;        
+        $item->password = bcrypt($request->password);
+        $item->rating = $request->rating;
 
-        if($item->update($data)) {
+        if($item->update()) {
             $request->session()->flash('alert-success-update', 'User berhasil diupdate');
         }
         

@@ -66,7 +66,7 @@ class ManagerDashboardController extends Controller
             $row['id'] = $req->id;
             $row['tanggal_request'] = $req->request_created_date;
             $row['jenis_permohonan'] = $req->jenis_permintaan;
-            $row['nama_client'] = $req->user->name;
+            $row['nama_client'] = $req->user->name ?? '';
             $row['nama_penyervis'] = $requested_name->name;
             $row['deskripsi'] = $req->description;
             $row['status'] = $req->status;

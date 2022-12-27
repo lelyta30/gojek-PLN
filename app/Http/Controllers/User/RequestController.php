@@ -32,7 +32,8 @@ class RequestController extends Controller
             return $data->id;
         })
         ->addColumn('nama_penyervis', function ($data) {
-            return $data->id_requested;
+            $requested_name = User::where('id', $data->id_requested)->first();
+            return $requested_name->name;
         })
         ->addColumn('nama_client', function ($data) {
             return $data->user->name;
@@ -73,7 +74,51 @@ class RequestController extends Controller
         ->make(true);
     }
 
+    // public function getData()
+    // {
+    //     $userrequest = UserRequest::where('client_id', Auth::user()->id)->with('user')->get();
+    //     // dd($userrequest);
+    //     $data = array();
+        
+    //     $no = 0;
+    //     foreach ($userrequest as $req) {
+    //         // $requested_name = User::findOrFail($req->id_requested);
+    //         $requested_name = User::where('id', $req->id_requested)->first();
+    //         $row = array();
+    //         $row['DT_RowIndex'] = ++$no;
+    //         $row['id'] = $req->id;
+    //         $row['tanggal'] = $req->request_created_date;
+    //         $row['jenis_permintaan'] = $req->jenis_permintaan;
+    //         $row['nama_penyervis'] = $requested_name->name;
+    //         $row['deskripsi'] = $req->description;
+    //         $row['status'] = $req->status;
+
+    //         $data[] = $row;
+    //     }
+    //     dd($data);
+    //     return $data;
+    // }
+
+    // public function data()
+    // {
+    //     $data = $this->getData();
+
+    //     return datatables()
+    //         ->of($data)
+    //         ->addColumn('action', function($data){
+    //             $btn = '<a 
+    //              href="request/show/'.$data->id.'" 
+    //              class="btn btn-primary btn-sm mb-2" id="">
+    //              <i class="fas fa-print"></i>&nbsp;&nbsp;Show
+    //              </a>';
+    
+    //              return $btn;
+    //         })
+    //         ->make(true);
+    // }
+    
     public function index() {
+    
         return view('pages.user.request.list');
     }
 
@@ -142,15 +187,14 @@ class RequestController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request, $id) {
 
-        $order = UserRequest::findOrFail($request->id);
+        $order = UserRequest::findOrFail($id);
         $order->client_id = $request->client_id;
         $order->request_created_date = $request->request_created_date;
         $order->id_requested = $request->requested_id;
         $order->jenis_permintaan = $request->jenis_permohonan;
         $order->description = $request->description;
-        $order->rating = 0;
         $order->status = 'Ordering';
         $order->update();
 
@@ -230,10 +274,22 @@ class RequestController extends Controller
         $item = UserRequest::findOrFail($id);
 
         $item->rating = $request->rating;
-
-        // dd($item);
-
         $item->update();
+
+        $tukang = User::findOrFail($item->id_requested); // cari tukang
+        $request_tukang = UserRequest::where([['id_requested', $tukang->id], ['status', 'Finished']])->get(); //cari rating tiap request
+        
+        $rating = 3;
+        $no = 0;
+
+        foreach($request_tukang as $res){
+            $rating += $res->rating; //cari rating tiap request
+            $no++;
+        }
+
+        $rating_avg = $rating/($no+1); //rata-ratain
+        $tukang->rating = $rating_avg;
+        $tukang->update();
 
         return redirect()->route('user.request', [
             'item'  => $item 
@@ -258,9 +314,9 @@ class RequestController extends Controller
         return view('pages.user.request.rating', compact('item'));
     }
 
-    public function edit(Request $request)
+    public function edit($id)
     {   
-        $item = UserRequest::findOrFail($request->id);        
+        $item = UserRequest::findOrFail($id);        
         $users = User::where('role', $item->jenis_permintaan)->get();        
 
         $roles = array();
@@ -270,6 +326,45 @@ class RequestController extends Controller
         $roles[3] = 'SECURITY';
 
         return view('pages.user.request.edit', compact('item','roles', 'users'));
+    }
+
+    public function listPekerja()
+    {    
+        return view('pages.user.request.listpekerja');
+    }
+
+    public function getData()
+    {
+        $listuser = User::whereNotIn('role', ['USER','MANAGER'])->get();
+        // dd($userrequest);
+        $data = array();
+        
+        $no = 0;
+        foreach ($listuser as $req) {
+
+            $row = array();
+            $row['DT_RowIndex'] = ++$no;
+            $row['id'] = $req->id;
+            $row['name'] = $req->name;
+            $row['role'] = $req->role;
+            $row['no_hp'] = $req->no_hp;
+            $row['rating'] = $req->rating;
+
+            $data[] = $row;
+        }
+        // dd($data);
+        return $data;
+    }
+
+    public function dataPekerja()
+    {
+        $data = $this->getData();
+
+        // dd($data);
+
+        return datatables()
+            ->of($data)
+            ->make(true);
     }
 
 }

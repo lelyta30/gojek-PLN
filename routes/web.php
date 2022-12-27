@@ -49,11 +49,15 @@ Route::prefix('/')
         ->name('user.request');
         Route::get('/request/json', [RequestController::class, 'json'])
         ->name('user.request.json');
+        Route::get('/request/daftar-pekerja', [RequestController::class, 'listPekerja'])
+        ->name('user.request.daftarpekerja');
+        Route::get('/request/pekerjajson', [RequestController::class, 'dataPekerja'])
+        ->name('user.request.pekerjajson');
         Route::get('/request/create', [RequestController::class, 'create'])
         ->name('user.request.create');
         Route::get('/request/edit/{id}', [RequestController::class, 'edit'])
         ->name('user.request.edit');
-        Route::get('/request/update', [RequestController::class, 'update'])
+        Route::post('/request/update/{id}', [RequestController::class, 'update'])
         ->name('user.request.update');
         Route::get('/request/show/{id}', [RequestController::class, 'show'])
         ->name('user.request.show');
@@ -217,18 +221,29 @@ Route::prefix('m')
     ->group(function(){
         Route::get('/', [ManagerDashboardController::class, 'index'])
         ->name('manager.dashboard');
-        Route::get('/user/alluser_store', [TechnicianController::class, 'alluser_store'])
-        ->name('alluser.store');
-        Route::get('/user/destroy/{id}', [TechnicianController::class, 'destroy'])
-        ->name('manager.user.delete');
         Route::get('/verified-request', [VerifiedRequestController::class, 'index'])
         ->name('manager.verified-request');
         Route::get('/verified-request/json', [VerifiedRequestController::class, 'json'])
         ->name('manager.verified-request.json');
         Route::put('/verified-request/verify/{id}', [VerifiedRequestController::class, 'verify'])
         ->name('manager.verified-request.verify');
-        Route::get('/technician/json', [TechnicianController::class, 'json'])
+
+
+        Route::get('/user/json', [TechnicianController::class, 'json'])
         ->name('technician.json');
+        Route::get('/user/index', [TechnicianController::class, 'index'])
+        ->name('technician.index');
+        Route::get('/user/create', [TechnicianController::class, 'create'])
+        ->name('technician.create');
+        Route::get('/user/alluser_store', [TechnicianController::class, 'alluser_store'])
+        ->name('alluser.store');
+        Route::get('/user/destroy/{id}', [TechnicianController::class, 'destroy'])
+        ->name('manager.user.delete');
+        Route::get('/user/edit/{id}', [TechnicianController::class, 'edit'])
+        ->name('manager.user.edit');
+        Route::post('/user/update/{id}', [TechnicianController::class, 'update'])
+        ->name('manager.user.update');
+        
         
         Route::get('/verified-request/export-excel/{awal}/{akhir}', [ManagerDashboardController::class, 'exportExcel'])
         ->name('manager.request.export_excel');
@@ -236,8 +251,4 @@ Route::prefix('m')
         Route::get('/verified-request/data/{awal}/{akhir}', [ManagerDashboardController::class, 'data'])
         ->name('manager.request.data');
         
-
-        Route::resources([
-            'technician'    => TechnicianController::class
-        ]);
     });

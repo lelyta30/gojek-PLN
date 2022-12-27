@@ -26,11 +26,17 @@ Tip 2: you can also add an image using data-image tag
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link " href="{{ route('user.request.daftarpekerja') }}">
+                  <i class="nc-icon nc-bullet-list-67"></i>
+                  <p>List Pekerja</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link " href="{{ route('user.profile') }}">
                   <i class="nc-icon nc-fav-remove"></i>
                   <p>Profil</p>
               </a>
-            </li>    
+            </li>  
           @endif
           
           @if (Auth::user()->role == 'TECHNICIAN')
