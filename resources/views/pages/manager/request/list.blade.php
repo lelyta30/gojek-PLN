@@ -21,14 +21,14 @@
      <div class="container-fluid">
          <div class="row">
              <div class="col-12">
-                 <div class="card ">
-                     <div class="card-header ">
+                 <div class="card">
+                     <div class="card-header">
                          <h4 class="card-title">List Request Diverifikasi</h4>
                          <p class="card-category">Request dari semua user</p>
                          <button onclick="updatePeriode()" class="btn btn-info btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Ubah Periode</button>
                          <a href="{{ route('manager.request.export_excel', [$tanggalAwal, $tanggalAkhir]) }}" target="_blank" class="btn btn-success btn-xs btn-flat"><i class="fa fa-file-excel-o"></i> Export Excel</a>
                      </div>
-                     <div class="card-body ">
+                     <div class="card-body">
                          <div class="table-responsive overflow-auto">
                              <table class="table table-bordered" id="verified-request-table" width="100%" cellspacing="0">
                                  <thead>
@@ -59,7 +59,6 @@
  @push('after-style')
  {{-- Datatables  --}}
  <link href="{{ asset('assets/css/datatables.min.css') }}" rel="stylesheet" />
- <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
  @endpush
  
  @push('after-script')
@@ -68,7 +67,7 @@
  <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
  <script>
      $(function () {
-         $('#verified-request-table').DataTable({
+        $('#verified-request-table').DataTable({
             responsive: true,
             processing: true,
             serverSide: true,
@@ -76,7 +75,7 @@
             ajax: {
                 url: "{{ route('manager.request.data', [$tanggalAwal, $tanggalAkhir]) }}"
             },
-             columns: [
+                columns: [
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'id'},
                 {data: 'tanggal_request'},
@@ -86,12 +85,16 @@
                 {data: 'deskripsi'},
                 {data: 'status'},
                 {data: 'rating'},
-             ],
-         });
-         $('.datepicker').datepicker({
+                ],
+        });
+        $('#tanggal_awal').datepicker({
             format: 'yyyy-mm-dd',
             autoclose: true
-        });
+        });  
+        $('#tanggal_akhir').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });  
 
     });
     function updatePeriode() {
